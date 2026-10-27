@@ -9,3 +9,4 @@ dist/
 *.mp3
 *.mp4
 .DS_Store
+__pycache__/
