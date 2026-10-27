@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase 0 viewer spike</title>
+  <style>
+    body { margin: 0; background: #111; color: #eee; font: 13px/1.5 ui-monospace, Menlo, monospace; overflow: hidden; }
+    #readout { position: fixed; top: 8px; left: 8px; padding: 8px 10px; background: rgba(0, 0, 0, 0.7); border-radius: 4px; white-space: pre; }
+    #turn { position: fixed; top: 8px; right: 8px; padding: 6px 10px; font: inherit; }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/",
+        "@sparkjsdev/spark": "https://sparkjs.dev/releases/spark/2.4.0/spark.module.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="readout">loading...</div>
+  <button id="turn" disabled>Run 10 s turn test</button>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
