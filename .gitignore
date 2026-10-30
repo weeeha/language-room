@@ -1,0 +1,12 @@
+media/
+.env
+node_modules/
+dist/
+*.spz
+*.ply
+*.glb
+*.wav
+*.mp3
+*.mp4
+.DS_Store
+__pycache__/
