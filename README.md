@@ -1,5 +1,13 @@
 # language-room
 
+**Problem.** Speaking practice needs a situation to speak in and a partner who keeps to the learner's level. A tutor that marks a correct sentence as wrong teaches the wrong thing, so correctness is the main risk.
+
+**Idea.** Walk into a generated place (a Lisbon café, a Tokyo ticket window) and talk to the person behind the counter. The conversation is the lesson, the place supplies context, and a recap lists the phrases used, the mistakes and three phrases to practise.
+
+**Built.** Exploration with a spec, an implementation plan and a phase 0 viewer spike (three.js and Spark) that loaded a 500k-splat sample room in about 2 seconds at 60 fps in Chrome. There is no app code beyond the spike, and Safari is not measured. 7 commits on 2 days, Oct 27 to Oct 30, 2026.
+
+**Decision.** Each place is generated once with World Labs Marble and exported, instead of generated live with Genie 3 or Runway GWM Worlds 2. Neither has a public API and live worlds drift and forget, at the cost that the scene cannot react to the conversation.
+
 Status: exploration. Live URL: none. Started 2026-10-27.
 
 **TL;DR**
