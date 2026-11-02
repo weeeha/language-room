@@ -8,6 +8,8 @@
 
 **Decision.** Each place is generated once with World Labs Marble and exported, instead of generated live with Genie 3 or Runway GWM Worlds 2. Neither has a public API and live worlds drift and forget, at the cost that the scene cannot react to the conversation.
 
+![Phase 0 viewer spike: a painted bedroom Gaussian splat of 500,000 splats rendered in Chrome with three.js and Spark, with a readout showing 1.46 s load time and 61 fps.](docs/screenshots/viewer-spike.png)
+
 Status: exploration. Live URL: none. Started 2026-10-27.
 
 **TL;DR**
