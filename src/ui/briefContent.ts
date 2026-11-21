@@ -36,7 +36,7 @@ function languageHeading(scenario: Scenario): string {
 }
 
 export function briefContent(scenario: Scenario): BriefContent {
-  const prompt = scenario.place.scene?.prompt;
+  const prompt = scenario.place.scene?.prompt ?? scenario.place.prompt;
   const words: BriefWord[] = [];
   const seen = new Map<string, number>();
   const add = (portuguese: string, gloss?: string): void => {

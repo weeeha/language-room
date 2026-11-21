@@ -23,6 +23,7 @@
       "required": ["name"],
       "properties": {
         "name": { "$ref": "#/$defs/text" },
+        "prompt": { "$ref": "#/$defs/text" },
         "scene": {
           "type": "object",
           "required": ["file", "format", "spawn"],

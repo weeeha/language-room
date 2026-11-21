@@ -6,7 +6,9 @@ import { createLibrary } from "./ui/Library";
 import { createPlay } from "./ui/Play";
 import { createRecap } from "./ui/Recap";
 import { paths } from "./ui/routes";
-import { findScenario } from "./ui/scenarios";
+import { resolveScenario } from "./ui/scenarios";
+import { createAuthor } from "./ui/Author";
+import { createAuthorList } from "./ui/AuthorList";
 import { startRouter, type Screen } from "./ui/router";
 
 function textScreen(title: string, message: string): Screen {
@@ -30,17 +32,21 @@ if (root) {
       case "library":
         return createLibrary();
       case "brief": {
-        const entry = findScenario(route.id);
+        const entry = await resolveScenario(route.id);
         return entry ? createBrief(entry.scenario, entry.listed) : textScreen("Scenario not found", "Scenario not found");
       }
       case "play": {
-        const entry = findScenario(route.id);
+        const entry = await resolveScenario(route.id);
         return entry ? createPlay(entry.scenario) : textScreen("Scenario not found", "Scenario not found");
       }
       case "recap": {
-        const entry = findScenario(route.id);
+        const entry = await resolveScenario(route.id);
         return entry ? createRecap(entry.scenario, route.sessionId) : textScreen("Scenario not found", "Scenario not found");
       }
+      case "author":
+        return createAuthorList();
+      case "author-edit":
+        return createAuthor(route.id);
       default:
         return textScreen("Page not found", "Page not found");
     }

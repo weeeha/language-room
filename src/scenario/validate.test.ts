@@ -68,4 +68,15 @@ describe("validateScenario", () => {
     expect(bad.valid).toBe(false);
     if (!bad.valid) expect(bad.errors.join("\n")).toContain("tiers.low");
   });
+
+  it("accepts an optional place.prompt and rejects an empty one", () => {
+    const input = validScenario();
+    const place = input.place as Record<string, unknown>;
+    place.prompt = "A bakery with a long wooden counter";
+    expect(validateScenario(input).valid).toBe(true);
+    place.prompt = " ";
+    const bad = validateScenario(input);
+    expect(bad.valid).toBe(false);
+    if (!bad.valid) expect(bad.errors.join("\n")).toContain("place.prompt");
+  });
 });

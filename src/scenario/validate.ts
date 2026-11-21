@@ -53,6 +53,8 @@ export interface Scenario {
   level: Level;
   place: {
     name: string;
+    /** What the place looks like. Used when there is no scene to carry the prompt. */
+    prompt?: string;
     scene?: Scene;
     hotspots?: Hotspot[];
     signage?: Signage[];
@@ -244,6 +246,7 @@ export function validateScenario(input: unknown): ValidationResult {
   const place = c.object(input, "place", "place");
   if (place) {
     c.text(place, "name", "place.name");
+    c.optionalText(place, "prompt", "place.prompt");
     if (place.scene !== undefined) {
       if (isObj(place.scene)) checkScene(c, place.scene, "place.scene");
       else c.fail("place.scene", "must be an object");

@@ -43,6 +43,7 @@ export function createLibrary(opts: { dev?: boolean } = {}): Screen {
 
   const recapSlot = h("div", {});
   root.append(recapSlot);
+  root.append(h("p", { class: "last-recap" }, h("a", { class: "tap", href: paths.author() }, "Write or import a scenario")));
 
   if (dev) {
     const unlisted = availableEntries(all, true).filter((e) => !e.listed);

@@ -7,13 +7,23 @@ export interface Screen {
   /** Class names for the root <main> element. */
   rootClass?: string;
   dispose?(): void;
+  /** A message when leaving would lose work, or null. The router asks before it leaves. */
+  leaveWarning?(): string | null;
 }
+
+export const ADDRESS_CHANGED = "language-room:address-changed";
 
 export type Resolver = (route: Route) => Screen | Promise<Screen>;
 
 export function startRouter(root: HTMLElement, resolve: Resolver): { navigate(path: string): void } {
   let current: Screen | undefined;
   let token = 0;
+  let shownPath = location.pathname + location.search;
+
+  function mayLeave(): boolean {
+    const message = current?.leaveWarning?.();
+    return !message || window.confirm(message);
+  }
 
   async function render(first: boolean): Promise<void> {
     const mine = ++token;
@@ -25,6 +35,7 @@ export function startRouter(root: HTMLElement, resolve: Resolver): { navigate(pa
     }
     current?.dispose?.();
     current = screen;
+    shownPath = location.pathname + location.search;
     root.className = screen.rootClass ?? "wrap page";
     root.replaceChildren(screen.element);
     document.title = `${screen.title} - Language room`;
@@ -40,6 +51,7 @@ export function startRouter(root: HTMLElement, resolve: Resolver): { navigate(pa
 
   function navigate(path: string): void {
     if (path === location.pathname + location.search) return;
+    if (!mayLeave()) return;
     history.pushState({}, "", path);
     void render(false);
   }
@@ -54,7 +66,17 @@ export function startRouter(root: HTMLElement, resolve: Resolver): { navigate(pa
     event.preventDefault();
     navigate(url.pathname + url.search);
   });
-  window.addEventListener("popstate", () => void render(false));
+  // A screen that rewrites its own address with replaceState tells the router with this event.
+  window.addEventListener(ADDRESS_CHANGED, () => {
+    shownPath = location.pathname + location.search;
+  });
+  window.addEventListener("popstate", () => {
+    if (!mayLeave()) {
+      history.pushState({}, "", shownPath);
+      return;
+    }
+    void render(false);
+  });
   void render(true);
   return { navigate };
 }

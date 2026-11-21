@@ -21,3 +21,7 @@ Then add this block after `targets`:
 ```
 
 Run `npm run validate:scenarios`. The line should say `valid, listed`.
+
+## Scenarios written in the browser
+
+The authoring form at `/author` saves scenarios in the browser only. Use Export file to get `<id>.json`, put it in this folder and run `npm run validate:scenarios`. A file written this way has no `reviewed` block until a fluent speaker signs it off.

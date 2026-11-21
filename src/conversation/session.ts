@@ -1,5 +1,6 @@
 // Session log (docs/spec.md section 4.2). Text and timings only: audio is never stored.
 import type { Recap } from "../recap/build";
+import { DB_NAME, openDb } from "../storage/db";
 import type { Issue } from "./corrections";
 
 export interface Turn {
@@ -64,23 +65,9 @@ function request<T>(req: IDBRequest<T>): Promise<T> {
 }
 
 /** Keeps sessions in the browser. Checked in the browser in part 2, not in Node. */
-export function createIndexedDbStore(dbName = "language-room"): SessionStore {
-  let opened: Promise<IDBDatabase> | undefined;
-  function open(): Promise<IDBDatabase> {
-    opened ??= new Promise<IDBDatabase>((resolve, reject) => {
-      const req = indexedDB.open(dbName, 1);
-      req.onupgradeneeded = () => {
-        if (!req.result.objectStoreNames.contains(STORE_NAME)) {
-          req.result.createObjectStore(STORE_NAME, { keyPath: "id" });
-        }
-      };
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error ?? new Error("IndexedDB could not open"));
-    });
-    return opened;
-  }
+export function createIndexedDbStore(dbName = DB_NAME): SessionStore {
   async function store(mode: IDBTransactionMode): Promise<IDBObjectStore> {
-    const db = await open();
+    const db = await openDb(dbName);
     return db.transaction(STORE_NAME, mode).objectStore(STORE_NAME);
   }
   return {
