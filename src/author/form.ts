@@ -11,6 +11,8 @@ import {
   type Vec3,
 } from "../scenario/validate";
 
+const ID_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
 export const DEFAULT_LANGUAGE = { code: "pt-PT", name: "European Portuguese" } as const;
 
 /** Ids that the routes use for other screens. A scenario cannot take them. */
@@ -118,14 +120,23 @@ export function deriveStepId(hint: string, others: readonly string[], fallback =
 
 // ---------- state changes (each returns a new state) ----------
 
+/** While a scenario is new, the scene path follows the id: media/<id>/<file>. */
+export function retargetScenePath(state: FormState): FormState {
+  if (!state.isNew || !state.scene || !ID_PATTERN.test(state.id.trim())) return state;
+  const m = /^media\/[^/]+\/([^/]+)$/.exec(state.scene.file);
+  if (!m) return state;
+  const file = `media/${state.id.trim()}/${m[1]}`;
+  return file === state.scene.file ? state : { ...state, scene: { ...state.scene, file } };
+}
+
 export function setTitle(state: FormState, title: string): FormState {
   const next = { ...state, title };
   if (state.isNew && !state.idEdited) next.id = deriveScenarioId(title);
-  return next;
+  return retargetScenePath(next);
 }
 
 export function setId(state: FormState, id: string): FormState {
-  return { ...state, id, idEdited: true };
+  return retargetScenePath({ ...state, id, idEdited: true });
 }
 
 export function addStep(state: FormState): FormState {

@@ -21,6 +21,8 @@ export interface SceneViewer {
   project(position: Vec3): ScreenPoint;
   /** A point on the ray through the pointer, at a fixed distance. Null until the scene is ready. */
   pick(clientX: number, clientY: number): Vec3 | null;
+  /** Where the camera is and the point it looks at, for choosing a spawn. Null until the scene is ready. */
+  pose(): { position: Vec3; lookAt: Vec3 } | null;
   onFrame(fn: () => void): () => void;
   pause(): void;
   resume(): void;
@@ -258,6 +260,15 @@ export function createSceneViewer(container: HTMLElement, opts: ViewerOptions): 
       const dir = far.sub(camera.position).normalize();
       const p = camera.position.clone().addScaledVector(dir, PICK_DISTANCE);
       return [round2(p.x), round2(p.y), round2(p.z)];
+    },
+    pose() {
+      if (!camera || !loaded) return null;
+      const { THREE } = loaded;
+      camera.updateMatrixWorld();
+      const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
+      const at = camera.position.clone().addScaledVector(dir, PICK_DISTANCE);
+      const p = camera.position;
+      return { position: [round2(p.x), round2(p.y), round2(p.z)], lookAt: [round2(at.x), round2(at.y), round2(at.z)] };
     },
     onFrame(fn) {
       frameListeners.add(fn);

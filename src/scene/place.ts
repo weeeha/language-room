@@ -48,6 +48,37 @@ export function placementFragment(work: WorkingPlace, target: PlaceTarget): { wh
   return item ? { where: "place.signage", json: JSON.stringify(item) } : null;
 }
 
+/**
+ * Calls onPick with the scene position under a click. A drag looks around and does not pick.
+ * Presses inside an element that matches ignore (a control panel) are skipped.
+ * Returns a function that removes the listeners.
+ */
+export function bindPick(
+  surface: HTMLElement,
+  viewer: Pick<SceneViewer, "pick">,
+  onPick: (position: Vec3) => void,
+  ignore = ".place-panel",
+): () => void {
+  let down: { x: number; y: number } | null = null;
+  const onDown = (e: PointerEvent): void => {
+    down = { x: e.clientX, y: e.clientY };
+  };
+  const onUp = (e: PointerEvent): void => {
+    if (!down || (e.target as Element | null)?.closest(ignore)) return;
+    const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y);
+    down = null;
+    if (moved > 4) return; // a drag looks around, it does not place
+    const pos = viewer.pick(e.clientX, e.clientY);
+    if (pos) onPick(pos);
+  };
+  surface.addEventListener("pointerdown", onDown);
+  surface.addEventListener("pointerup", onUp);
+  return () => {
+    surface.removeEventListener("pointerdown", onDown);
+    surface.removeEventListener("pointerup", onUp);
+  };
+}
+
 export interface PlacePanel {
   element: HTMLElement;
   dispose(): void;
@@ -84,26 +115,14 @@ export function createPlacePanel(work: WorkingPlace, viewer: SceneViewer, surfac
     if (frag) void navigator.clipboard?.writeText(frag.json);
   });
 
-  let down: { x: number; y: number } | null = null;
-  const onDown = (e: PointerEvent): void => {
-    down = { x: e.clientX, y: e.clientY };
-  };
-  const onUp = (e: PointerEvent): void => {
-    if (!down || (e.target as Element | null)?.closest(".place-panel")) return;
-    const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y);
-    down = null;
-    if (moved > 4) return; // a drag looks around, it does not place
-    const pos = viewer.pick(e.clientX, e.clientY);
-    if (pos && applyPlacement(work, current(), pos)) show();
-  };
-  surface.addEventListener("pointerdown", onDown);
-  surface.addEventListener("pointerup", onUp);
+  const unbind = bindPick(surface, viewer, (pos) => {
+    if (applyPlacement(work, current(), pos)) show();
+  });
 
   return {
     element: panel,
     dispose() {
-      surface.removeEventListener("pointerdown", onDown);
-      surface.removeEventListener("pointerup", onUp);
+      unbind();
     },
   };
 }

@@ -34,6 +34,7 @@ import { h } from "./dom";
 import { ADDRESS_CHANGED, type Screen } from "./router";
 import { paths } from "./routes";
 import { bundledScenarios, resolveScenario } from "./scenarios";
+import { createSceneSection } from "./AuthorScene";
 
 export const SHIP_TEXT =
   "To ship a scenario with the app, put the exported file in the scenarios folder of the project and run npm run validate:scenarios.";
@@ -508,15 +509,6 @@ export async function createAuthor(id: string, store: ScenarioStore = getScenari
     announce(`Downloaded ${exportFileName(check().scenario)}.`);
   });
 
-  const form = h(
-    "form",
-    { class: "author-form", novalidate: true },
-    basics,
-    placeSection,
-    characterSection,
-    goalSection,
-    wordsSection,
-  );
   const ctx: AuthorCtx = {
     getState: () => state,
     getSaved: () => saved,
@@ -527,7 +519,17 @@ export async function createAuthor(id: string, store: ScenarioStore = getScenari
     save,
     checkAll,
   };
-  void ctx;
+  const sceneSection = createSceneSection(ctx);
+  const form = h(
+    "form",
+    { class: "author-form", novalidate: true },
+    basics,
+    placeSection,
+    characterSection,
+    goalSection,
+    wordsSection,
+    sceneSection.element,
+  );
 
   form.append(h("h2", {}, "Save and export"), savedLine, h("p", { class: "muted" }, SHIP_TEXT), actions);
   form.addEventListener("submit", (e) => {
@@ -572,6 +574,7 @@ export async function createAuthor(id: string, store: ScenarioStore = getScenari
     leaveWarning: () => (isDirty() ? "You have unsaved changes. Leave without saving?" : null),
     dispose() {
       window.removeEventListener("beforeunload", onBeforeUnload);
+      sceneSection.dispose();
     },
   };
 }
