@@ -60,6 +60,8 @@ export interface Scenario {
     role: string;
     persona: string;
     voice?: { tts?: string; rate?: number };
+    /** Where the name tag sits in the scene. Without it the tag keeps a fixed place. */
+    anchor?: Vec3;
   };
   goal: {
     description: string;
@@ -255,6 +257,7 @@ export function validateScenario(input: unknown): ValidationResult {
     c.text(character, "name", "character.name");
     c.text(character, "role", "character.role");
     c.text(character, "persona", "character.persona");
+    if (character.anchor !== undefined) c.vec3(character, "anchor", "character.anchor");
     if (character.voice !== undefined) {
       const voice = character.voice;
       if (!isObj(voice)) c.fail("character.voice", "must be an object");

@@ -42,4 +42,19 @@ describe("validateScenario", () => {
       expect(result.warnings.join("\n")).toContain("unlisted");
     }
   });
+
+  it("accepts a character anchor and keeps it optional", () => {
+    expect(validateScenario(validScenario()).valid).toBe(true);
+    const input = validScenario();
+    (input.character as Record<string, unknown>).anchor = [0, 1.5, -2];
+    expect(validateScenario(input).valid).toBe(true);
+  });
+
+  it("rejects a character anchor that is not three numbers", () => {
+    const input = validScenario();
+    (input.character as Record<string, unknown>).anchor = [0, 1];
+    const result = validateScenario(input);
+    expect(result.valid).toBe(false);
+    if (!result.valid) expect(result.errors.join("\n")).toContain("character.anchor");
+  });
 });

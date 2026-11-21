@@ -287,8 +287,10 @@ export async function createPlay(scenario: Scenario): Promise<Screen> {
     if (disposed) return;
     void conversation.start();
     try {
-      const sample = import.meta.env.DEV && new URLSearchParams(location.search).get("scene") === "sample";
-      sceneView = mountScene(panel.sceneRoot, scenario, { sample });
+      const query = new URLSearchParams(location.search);
+      const sample = import.meta.env.DEV && query.get("scene") === "sample";
+      const place = import.meta.env.DEV && query.get("place") === "1";
+      sceneView = mountScene(panel.sceneRoot, scenario, { sample, place });
     } catch (e) {
       console.warn("scene mount failed", e);
     }

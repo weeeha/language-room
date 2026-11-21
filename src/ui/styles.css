@@ -652,7 +652,90 @@ li {
 }
 
 .scene-surface > .overlay,
-.scene-surface > .scene-extras {
+.scene-surface > .scene [hidden] {
+  display: none;
+}
+
+.sample-label {
+  font-weight: 600;
+}
+
+.hotspot {
+  display: block;
+}
+
+.hotspot-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 2px solid var(--color-accent);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-accent);
+  cursor: pointer;
+}
+
+.word-card {
+  display: block;
+}
+
+.is-placed .hotspot-btn {
+  display: inline-flex;
+}
+
+.is-placed .word-card {
+  display: none;
+  margin-top: var(--space-1);
+}
+
+.is-placed .word-card.is-open {
+  display: block;
+}
+
+.is-placed .scene-extras {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.placed {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: max-content;
+  max-width: min(260px, 70%);
+  pointer-events: auto;
+}
+
+.scene-surface > .overlay.placed {
+  position: absolute;
+}
+
+.placed.is-off {
+  display: none;
+}
+
+.place-panel {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 3;
+  max-width: min(320px, 90%);
+}
+
+.place-out {
+  margin: var(--space-2) 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: var(--text-sm);
+}
+
+.scene-extras {
   position: relative;
   z-index: 1;
 }

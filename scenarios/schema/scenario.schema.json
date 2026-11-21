@@ -75,6 +75,7 @@
         "name": { "$ref": "#/$defs/text" },
         "role": { "$ref": "#/$defs/text" },
         "persona": { "$ref": "#/$defs/text" },
+        "anchor": { "$ref": "#/$defs/vec3" },
         "voice": {
           "type": "object",
           "properties": {
