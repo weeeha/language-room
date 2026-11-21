@@ -23,6 +23,7 @@ export function createLocalLlm(opts: LocalLlmOptions = {}): LlmProvider {
           temperature: req.temperature,
           maxTokens: req.maxTokens,
           json: req.json,
+          thinking: req.thinking,
         }),
         signal: req.signal,
       });
@@ -42,6 +43,7 @@ export function createLocalLlm(opts: LocalLlmOptions = {}): LlmProvider {
           temperature: req.temperature,
           maxTokens: req.maxTokens,
           json: req.json,
+          thinking: req.thinking,
         }),
         signal: req.signal,
       });

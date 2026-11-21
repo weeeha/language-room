@@ -14,7 +14,8 @@
     "eval:stt:synthetic": "tsx eval/stt/run-synthetic.ts",
     "validate:scenarios": "tsx scripts/validate-scenarios.ts",
     "print:prompt": "tsx scripts/print-prompt.ts",
-    "timing:tts": "tsx scripts/tts-timing.ts"
+    "timing:tts": "tsx scripts/tts-timing.ts",
+    "loop:live": "tsx scripts/loop-live.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

@@ -116,6 +116,7 @@ export function createProxy(opts: ProxyOptions = {}) {
     if (typeof body.temperature === "number") payload.temperature = body.temperature;
     if (typeof body.maxTokens === "number") payload.max_tokens = body.maxTokens;
     if (body.json === true) payload.response_format = { type: "json_object" };
+    if (body.thinking !== true) payload.chat_template_kwargs = { enable_thinking: false };
     if (stream) payload.stream = true;
     return JSON.stringify(payload);
   }

@@ -8,6 +8,8 @@ export interface LlmRequest {
   temperature?: number;
   maxTokens?: number;
   json?: boolean;
+  /** Hidden reasoning. The local proxy switches it off unless this is true. */
+  thinking?: boolean;
   signal?: AbortSignal;
 }
 

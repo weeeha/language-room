@@ -49,6 +49,7 @@ export async function review(
     messages: buildReviewerMessages(input),
     temperature: 0,
     json: true,
+    thinking: true,
     signal: input.signal,
   });
   const parsed = parseReviewerOutput(text);

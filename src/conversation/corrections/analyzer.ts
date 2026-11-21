@@ -57,6 +57,7 @@ export async function analyze(
     messages: buildAnalyzerMessages(input),
     temperature: 0.2,
     json: true,
+    thinking: true,
     signal: input.signal,
   });
   return parseAnalyzerOutput(text, input.line);

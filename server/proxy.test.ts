@@ -91,6 +91,36 @@ describe("POST /api/llm", () => {
     expect(sent).toMatchObject({ model: "m1", messages, max_tokens: 20, temperature: 0.1 });
   });
 
+  it("switches hidden reasoning off unless thinking is true", async () => {
+    const f = upstreamFetch();
+    const api = await start({ LOCAL_LLM_URL: "http://local/v1" }, f as unknown as typeof fetch);
+    const sentBodies = () =>
+      f.mock.calls
+        .filter((c) => String(c[0]).endsWith("/chat/completions"))
+        .map((c) => JSON.parse(String(c[1]?.body)) as Record<string, unknown>);
+    await api.post("/api/llm", { provider: "local", messages: [] });
+    await api.post("/api/llm", { provider: "local", messages: [], thinking: false });
+    await api.post("/api/llm", { provider: "local", messages: [], thinking: true });
+    const [unset, off, on] = sentBodies();
+    expect(unset?.chat_template_kwargs).toEqual({ enable_thinking: false });
+    expect(off?.chat_template_kwargs).toEqual({ enable_thinking: false });
+    expect(on).not.toHaveProperty("chat_template_kwargs");
+  });
+
+  it("does the same on the stream route", async () => {
+    const bodies: Record<string, unknown>[] = [];
+    const f = vi.fn(async (url: string | URL | Request, init?: RequestInit) => {
+      if (String(url).endsWith("/models")) return new Response(JSON.stringify({ data: [{ id: "m1" }] }));
+      bodies.push(JSON.parse(String(init?.body)) as Record<string, unknown>);
+      return new Response('data: {"choices":[{"delta":{"content":"Oi."}}]}\n\ndata: [DONE]\n\n', { status: 200 });
+    });
+    const api = await start({ LOCAL_LLM_URL: "http://local/v1" }, f as unknown as typeof fetch);
+    await (await api.post("/api/llm/stream", { provider: "local", messages: [] })).text();
+    await (await api.post("/api/llm/stream", { provider: "local", messages: [], thinking: true })).text();
+    expect(bodies[0]?.chat_template_kwargs).toEqual({ enable_thinking: false });
+    expect(bodies[1]).not.toHaveProperty("chat_template_kwargs");
+  });
+
   it("caches the model id", async () => {
     const f = upstreamFetch();
     const api = await start({}, f as unknown as typeof fetch);

@@ -28,6 +28,18 @@ describe("createLocalLlm", () => {
     });
   });
 
+  it("passes thinking through on both routes", async () => {
+    const fetchSpy = vi.fn(async (url: string) =>
+      String(url).endsWith("/stream") ? new Response("ok") : jsonResponse({ text: "ok" }),
+    );
+    const llm = createLocalLlm({ fetch: fetchSpy as unknown as typeof fetch });
+    await llm.complete({ messages: [], thinking: true });
+    await llm.completeStream!({ messages: [], thinking: true }, () => undefined);
+    for (const call of fetchSpy.mock.calls as unknown as [string, RequestInit][]) {
+      expect(JSON.parse(String(call[1].body)).thinking).toBe(true);
+    }
+  });
+
   it("throws the server error message on a non-2xx reply", async () => {
     const fetchSpy = vi.fn(async () => jsonResponse({ error: "Upstream failed" }, 502));
     const llm = createLocalLlm({ fetch: fetchSpy as unknown as typeof fetch });
