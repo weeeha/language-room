@@ -8,8 +8,9 @@
     "build": "tsc --noEmit && vite build",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src server scripts",
+    "lint": "eslint src server scripts eval",
     "server": "tsx server/index.ts",
+    "eval": "tsx eval/run-gold.ts",
     "eval:stt:synthetic": "tsx eval/stt/run-synthetic.ts",
     "validate:scenarios": "tsx scripts/validate-scenarios.ts",
     "print:prompt": "tsx scripts/print-prompt.ts"
