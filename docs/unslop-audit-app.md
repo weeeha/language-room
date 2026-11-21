@@ -45,3 +45,7 @@ The fresh-eyes reviewer subagent step was skipped on purpose: this task may not 
 - CPY: no exclamation marks and no em dashes in the new UI text.
 - Not checked: Safari, the scene viewer with a live scene in a screenshot (the headless capture hung while the WebGL scene drew, so placement was checked by numbers and DOM, not by image), screen reader output.
 - Found outside this task: `.scene-surface > .overlay { display: none }` in `styles.css` hides the name tag, the sample label and the placing panel on the conversation page (computed display is none in a loaded scene). The authoring preview uses its own `.author-surface` class and is not affected. Left as is.
+
+## After review (2026-11-21)
+
+- The overlay rule listed under "Found outside this task" is fixed. The rule in `styles.css` that set `display: none` on `.scene-surface > .overlay` came from a bad edit in task 19, which replaced the rule that gave overlays their position and stacking. The name tag, the sample label and the placing panel now show in the ready and the failed state. Checked by computed style in headless Chrome. The unslop skill was not rerun after this fix.
