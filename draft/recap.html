@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recap - Language room draft</title>
+<link rel="stylesheet" href="styles.css">
+<script src="draft.js"></script>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+<symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></symbol>
+<symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3L2 21h20L12 3zM12 10v5M12 18h.01"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7h.01"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></symbol>
+<symbol id="i-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></symbol>
+<symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zM17 8a5 5 0 0 1 0 8"/></symbol>
+</svg>
+<header class="draft-bar">
+<div class="wrap">
+<nav aria-label="Draft navigation">
+<span>Draft navigation</span>
+<ul><li><a href="index.html">Library</a></li><li><a href="brief.html">Brief</a></li><li><a href="scene.html">Scene</a></li><li><a href="recap.html" aria-current="page">Recap</a></li><li><a href="states.html">States</a></li></ul>
+</nav>
+<p class="draft-note">This draft sends nothing. Controls that do not respond are coming soon.</p>
+</div>
+</header>
+<main class="wrap page" id="main">
+<div class="text-col">
+<h1>Recap, Coffee at a Lisbon café</h1>
+<p>You spoke 3 turns. You finished 2 of 3 goal steps.</p>
+<div class="actions">
+<a class="btn btn-primary" href="scene.html">Start again</a>
+<a class="btn" href="#transcript">Replay transcript</a>
+<a class="btn btn-plain" href="index.html">Back to library</a>
+</div>
+<h2>Phrases used</h2>
+<ul>
+<li lang="pt-PT">Bom dia</li>
+<li lang="pt-PT">um pastel de nata</li>
+<li lang="pt-PT">Quanto é?</li>
+</ul>
+<h2>Mistakes</h2>
+<dl class="facts mistake">
+<div><dt>You said</dt><dd lang="pt-PT">Queria uma café, por favor.</dd></div>
+<div><dt>Corrected form</dt><dd lang="pt-PT">Queria um café, por favor.</dd></div>
+<div><dt>Reason</dt><dd>Café is masculine, so it takes um.</dd></div>
+</dl>
+<h2>Phrases to practise</h2>
+<ol class="practise">
+<li><p class="say" lang="pt-PT"><strong>A conta, por favor.</strong></p>
+<p>Why: You did not reach this step, and it ends every visit.</p>
+<p>Example: "<span lang="pt-PT">Boa tarde. A conta, por favor.</span>"</p></li>
+<li><p class="say" lang="pt-PT"><strong>Queria um café, por favor.</strong></p>
+<p>Why: Practise um with a masculine word, the one slip in this session.</p>
+<p>Example: "<span lang="pt-PT">Queria um pastel de nata, por favor.</span>"</p></li>
+<li><p class="say" lang="pt-PT"><strong>Quanto é?</strong></p>
+<p>Why: Short and useful after any order.</p>
+<p>Example: "<span lang="pt-PT">Quanto é um galão?</span>"</p></li>
+</ol>
+<h2 id="transcript">Transcript</h2>
+<ol class="transcript" aria-label="Transcript">
+<li class="line line-char">
+<p class="who">Dona Amélia</p>
+<p class="say" lang="pt-PT">Bom dia. Diga, faz favor.</p>
+</li>
+<li class="line line-learner">
+<p class="who">You</p>
+<p class="say" lang="pt-PT">Bom dia.</p>
+<div class="chip-row"></div>
+</li>
+<li class="line line-char">
+<p class="who">Dona Amélia</p>
+<p class="say" lang="pt-PT">Bom dia. O que vai ser?</p>
+</li>
+<li class="line line-learner">
+<p class="who">You</p>
+<p class="say" lang="pt-PT">Queria uma café, por favor.</p>
+<div class="chip-row"><button class="chip" type="button" title="Café is masculine, so it takes um." aria-describedby="chip-note"><strong lang="pt-PT">um café</strong><span>Article gender</span></button>
+<span class="sr-only" id="chip-note">Café is masculine, so it takes um.</span></div>
+</li>
+<li class="line line-char">
+<p class="who">Dona Amélia</p>
+<p class="say" lang="pt-PT">Já trago o café. Mais alguma coisa?</p>
+</li>
+<li class="line line-learner">
+<p class="who">You</p>
+<p class="say" lang="pt-PT">Sim, um pastel de nata. Quanto é?</p>
+<div class="chip-row"></div>
+</li>
+<li class="line line-char">
+<p class="who">Dona Amélia</p>
+<p class="say" lang="pt-PT">São dois euros e trinta.</p>
+</li>
+</ol>
+</div>
+</main>
+</body>
+</html>

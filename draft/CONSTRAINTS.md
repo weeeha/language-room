@@ -221,7 +221,7 @@ Summary line (sample session of three turns, steps done: greet, order): "You spo
 Phrases used (from the transcript):
 
 - Bom dia
-- o pastel de nata
+- um pastel de nata
 - Quanto é?
 
 Mistake (one):
