@@ -33,3 +33,15 @@ The owner asked the run to take the recommended option at every gate and to reco
 18. **LLM streaming added.** The task 15 check needs audio to start before the full reply arrives.
 19. **Hidden reasoning switched off for character replies.** Measured on the same request: 4.0 s and an empty reply with it on, 0.32 s and a good reply with it off. The correction checker keeps it on, because its gold-set result was measured that way.
 20. **Task 16 split into two commits.** The loop first, then the page.
+21. **Library and brief screens built inside task 16.** The plan has no task for them, and the play page needs a way in.
+22. **Unreviewed scenarios show in development builds only**, under a plain "Development only" label. Without this the app has nothing to open until a fluent speaker signs the café scenario.
+
+## Owner instruction, relayed 2026-11-21
+
+"please do all tasks dont' wait for my confiramtion - just make recomemned decisiosn". From here on no gate stops the run. Paid steps, pushing, deploying, hardware and steps that need a person present stay skipped.
+
+## Phase 3 onward
+
+23. **One executor per phase from here, one commit per task.** Phases 3 to 5 are outlines, and usage is near the weekly cap.
+24. **The scene viewer is built against the free Spark sample room from the phase 0 spike.** The café export is a paid step. The sample loads only through a development switch and is labelled as a sample.
+25. **Correction chips arrive about 25 seconds after the learner line on the local model.** The checker keeps reasoning on for accuracy. The reply itself is not delayed. Revisit when a faster or paid model is approved.
