@@ -6,6 +6,7 @@ export default defineConfig({
       "src/**/*.test.ts",
       "server/**/*.test.ts",
       "eval/**/*.test.ts",
+      "scripts/**/*.test.ts",
     ],
     passWithNoTests: false,
   },

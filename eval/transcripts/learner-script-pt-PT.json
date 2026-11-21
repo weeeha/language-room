@@ -1,0 +1,42 @@
+{
+  "scenario": "lisbon-cafe-pt",
+  "level": "A2",
+  "voice": "Joana (macOS, synthetic)",
+  "note": "Seven lines that complete greet, order and pay. Three lines carry one deliberate A2 error each, of different kinds. The other lines are correct.",
+  "lines": [
+    { "id": "l1", "text": "Bom dia." },
+    {
+      "id": "l2",
+      "text": "Queria uma café e um pastel de nata, por favor.",
+      "error": {
+        "kind": "gender article",
+        "span": "uma café",
+        "expected": "um café",
+        "correctedLine": "Queria um café e um pastel de nata, por favor."
+      }
+    },
+    { "id": "l3", "text": "Sim, é tudo. Quanto é?" },
+    {
+      "id": "l4",
+      "text": "Eu não sabe quanto custa o galão.",
+      "error": {
+        "kind": "verb form",
+        "span": "sabe",
+        "expected": "sei",
+        "correctedLine": "Eu não sei quanto custa o galão."
+      }
+    },
+    {
+      "id": "l5",
+      "text": "Gosto muito de o café daqui.",
+      "error": {
+        "kind": "missing contraction",
+        "span": "de o café",
+        "expected": "do café",
+        "correctedLine": "Gosto muito do café daqui."
+      }
+    },
+    { "id": "l6", "text": "A conta, por favor. Obrigado." },
+    { "id": "l7", "text": "Bom dia." }
+  ]
+}

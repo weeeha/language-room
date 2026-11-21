@@ -1,0 +1,356 @@
+{
+  "date": "2026-11-21",
+  "scenarioId": "lisbon-cafe-pt",
+  "level": "A2",
+  "models": {
+    "llm": "gemma-4-E4B-it-Q8_0.gguf",
+    "stt": "whisper.cpp via /api/stt/local",
+    "tts": "none (no-audio stand-in)",
+    "voice": "macOS say -v Joana"
+  },
+  "session": {
+    "id": "3455d89a-669a-44c5-b188-9553d9088733",
+    "scenarioId": "lisbon-cafe-pt",
+    "scenarioVersion": 1,
+    "startedAt": 152.982292,
+    "turns": [
+      {
+        "id": "43dcf1f8-348d-4806-b998-944cfbff293b",
+        "role": "character",
+        "text": "Bom dia! O que gostaria de tomar hoje?",
+        "at": 1957.247292,
+        "level": {
+          "averageWords": 4,
+          "flagged": false
+        }
+      },
+      {
+        "id": "dd2520b3-f2f0-4ea0-a078-97b13dea3fd6",
+        "role": "learner",
+        "text": "Bom dia.",
+        "heardText": "Bom dia.",
+        "confirmed": true,
+        "at": 6467.252208
+      },
+      {
+        "id": "3da83a9d-52d5-40b6-8f2e-918fa0b46b0a",
+        "role": "character",
+        "text": "Um café e um pastel de nata, por favor.",
+        "at": 7108.128875,
+        "latencyMs": 937.390875,
+        "level": {
+          "averageWords": 9,
+          "flagged": false
+        }
+      },
+      {
+        "id": "f7f23886-b1a9-45de-b4cc-000b9b748f3b",
+        "role": "learner",
+        "text": "Queria uma café e um pastel de nata, por favor.",
+        "heardText": "Queria uma café e um pastel de nata, por favor.",
+        "confirmed": true,
+        "at": 19138.101458
+      },
+      {
+        "id": "8695c597-2f33-4d57-9f34-1ce7336907b1",
+        "role": "character",
+        "text": "Aqui está o seu café e o seu pastel. Mais alguma coisa?",
+        "at": 20010.690167,
+        "latencyMs": 1409.1098749999983,
+        "level": {
+          "averageWords": 6,
+          "flagged": false
+        }
+      },
+      {
+        "id": "dc955e7b-96b8-4382-853c-7ed15a44739f",
+        "role": "learner",
+        "text": "Sim, é tudo. Quanto é?",
+        "heardText": "Sim, é tudo. Quanto é?",
+        "confirmed": true,
+        "at": 41768.871208
+      },
+      {
+        "id": "6332426c-22df-4d40-9243-ef9481b5f390",
+        "role": "character",
+        "text": "Quer a conta, por favor?",
+        "at": 43102.848958,
+        "latencyMs": 1889.7485830000005,
+        "level": {
+          "averageWords": 5,
+          "flagged": false
+        }
+      },
+      {
+        "id": "b7144001-83ec-4c18-9120-a69da35e25bd",
+        "role": "learner",
+        "text": "Eu não sabe quanto custa o galão.",
+        "heardText": "Eu não sabe quanto custa o galão.",
+        "confirmed": true,
+        "at": 70540.033292
+      },
+      {
+        "id": "b466a054-47ef-4c81-889c-e5bc21340128",
+        "role": "character",
+        "text": "O galão custa um euro e sessenta.",
+        "at": 71421.655167,
+        "latencyMs": 1473.3417090000003,
+        "level": {
+          "averageWords": 7,
+          "flagged": false
+        }
+      },
+      {
+        "id": "0d10943a-d7e8-419e-aa90-2fe3e3668c48",
+        "role": "learner",
+        "text": "Gosto muito de um café daqui.",
+        "heardText": "Gosto muito de um café daqui.",
+        "confirmed": true,
+        "at": 105132.850542
+      },
+      {
+        "id": "82876694-7b17-4f8e-b430-83f89d62d9ae",
+        "role": "character",
+        "text": "Fico feliz que goste. Quer pagar agora?",
+        "at": 105932.569667,
+        "latencyMs": 1087.0357079999958,
+        "level": {
+          "averageWords": 3.5,
+          "flagged": false
+        }
+      },
+      {
+        "id": "414cfe6d-b051-4798-9428-cdd6009af0d1",
+        "role": "learner",
+        "text": "A conta? Por favor. Obrigado.",
+        "heardText": "A conta? Por favor. Obrigado.",
+        "confirmed": true,
+        "at": 148215.759417
+      },
+      {
+        "id": "5a34037a-38c9-4a80-86db-d910eafb861d",
+        "role": "character",
+        "text": "Aqui está a conta. Muito obrigada pela visita!",
+        "at": 148666.383875,
+        "latencyMs": 598.5365830000082,
+        "level": {
+          "averageWords": 4,
+          "flagged": false
+        }
+      },
+      {
+        "id": "de13865c-d12a-4b4f-a154-1ced5ced798f",
+        "role": "learner",
+        "text": "Bom dia.",
+        "heardText": "Bom dia.",
+        "confirmed": true,
+        "at": 156534.405167
+      },
+      {
+        "id": "e9294aab-717b-4c0d-be28-e82a2adb791d",
+        "role": "character",
+        "text": "Bom dia! O que gostaria de tomar hoje?",
+        "at": 156798.740458,
+        "latencyMs": 334.4707079999789,
+        "level": {
+          "averageWords": 4,
+          "flagged": false
+        }
+      }
+    ],
+    "issues": [
+      {
+        "span": "uma café",
+        "type": "grammar",
+        "suggestion": "um café",
+        "rule": "Gender agreement",
+        "verdict": "correct",
+        "reason": "Café is a masculine noun in Portuguese, requiring the article 'um'.",
+        "id": "issue-mwqzu9nh-1",
+        "turnId": "f7f23886-b1a9-45de-b4cc-000b9b748f3b",
+        "shown": true
+      },
+      {
+        "span": "sabe",
+        "type": "grammar",
+        "suggestion": "sei",
+        "rule": "Verb conjugation (saber)",
+        "verdict": "correct",
+        "reason": "The correct conjugation for 'Eu' is 'sei', not 'sabe'.",
+        "id": "issue-mwqzvmlo-2",
+        "turnId": "b7144001-83ec-4c18-9120-a69da35e25bd",
+        "shown": true
+      },
+      {
+        "span": "Gosto muito de",
+        "type": "register",
+        "suggestion": "Queria",
+        "rule": "Incorrect verb usage for ordering",
+        "verdict": "incorrect",
+        "reason": "The phrase is grammatically correct, although 'Queria' is more appropriate for making an order.",
+        "id": "issue-mwqzwk0d-3",
+        "turnId": "0d10943a-d7e8-419e-aa90-2fe3e3668c48",
+        "shown": false
+      }
+    ],
+    "stepsDone": [
+      "greet",
+      "order"
+    ],
+    "providers": {
+      "stt": "stt-whisper-local",
+      "llm": "llm-local",
+      "analyzer": "llm-local",
+      "reviewer": "llm-local",
+      "tts": "tts-none-synthetic"
+    },
+    "errors": [],
+    "endedAt": 160302.38025,
+    "endReason": "learner"
+  },
+  "recap": {
+    "sessionId": "3455d89a-669a-44c5-b188-9553d9088733",
+    "phrasesUsed": [
+      "Bom dia",
+      "Quanto é?",
+      "A conta, por favor"
+    ],
+    "mistakes": [
+      {
+        "learnerText": "Queria uma café e um pastel de nata, por favor.",
+        "corrected": "Queria um café e um pastel de nata, por favor.",
+        "rule": "Gender agreement",
+        "reason": "Café is a masculine noun in Portuguese, requiring the article 'um'.",
+        "turnId": "f7f23886-b1a9-45de-b4cc-000b9b748f3b"
+      },
+      {
+        "learnerText": "Eu não sabe quanto custa o galão.",
+        "corrected": "Eu não sei quanto custa o galão.",
+        "rule": "Verb conjugation (saber)",
+        "reason": "The correct conjugation for 'Eu' is 'sei', not 'sabe'.",
+        "turnId": "b7144001-83ec-4c18-9120-a69da35e25bd"
+      }
+    ],
+    "practise": [
+      {
+        "phrase": "Queria um café, por favor",
+        "why": "Use this to politely order something.",
+        "example": "Eu queria um pão, por favor",
+        "source": "unmet-target"
+      },
+      {
+        "phrase": "Bom dia",
+        "why": "Say this when greeting someone in the morning.",
+        "example": "Bom dia, como está",
+        "source": "target"
+      },
+      {
+        "phrase": "A conta, por favor",
+        "why": "Ask for the bill when you are finished eating.",
+        "example": "A conta, por favor",
+        "source": "target"
+      }
+    ],
+    "generatedAt": 1795301101710,
+    "summary": {
+      "learnerTurns": 7,
+      "stepsDone": 2,
+      "stepsTotal": 3
+    }
+  },
+  "script": [
+    {
+      "id": "l1",
+      "text": "Bom dia."
+    },
+    {
+      "id": "l2",
+      "text": "Queria uma café e um pastel de nata, por favor.",
+      "error": {
+        "kind": "gender article",
+        "span": "uma café",
+        "expected": "um café",
+        "correctedLine": "Queria um café e um pastel de nata, por favor."
+      }
+    },
+    {
+      "id": "l3",
+      "text": "Sim, é tudo. Quanto é?"
+    },
+    {
+      "id": "l4",
+      "text": "Eu não sabe quanto custa o galão.",
+      "error": {
+        "kind": "verb form",
+        "span": "sabe",
+        "expected": "sei",
+        "correctedLine": "Eu não sei quanto custa o galão."
+      }
+    },
+    {
+      "id": "l5",
+      "text": "Gosto muito de o café daqui.",
+      "error": {
+        "kind": "missing contraction",
+        "span": "de o café",
+        "expected": "do café",
+        "correctedLine": "Gosto muito do café daqui."
+      }
+    },
+    {
+      "id": "l6",
+      "text": "A conta, por favor. Obrigado."
+    },
+    {
+      "id": "l7",
+      "text": "Bom dia."
+    }
+  ],
+  "turnScriptIds": {
+    "dd2520b3-f2f0-4ea0-a078-97b13dea3fd6": "l1",
+    "f7f23886-b1a9-45de-b4cc-000b9b748f3b": "l2",
+    "dc955e7b-96b8-4382-853c-7ed15a44739f": "l3",
+    "b7144001-83ec-4c18-9120-a69da35e25bd": "l4",
+    "0d10943a-d7e8-419e-aa90-2fe3e3668c48": "l5",
+    "414cfe6d-b051-4798-9428-cdd6009af0d1": "l6",
+    "de13865c-d12a-4b4f-a154-1ced5ced798f": "l7"
+  },
+  "median": 1087.0357079999958,
+  "score": {
+    "learnerLines": 7,
+    "heardDiffers": 1,
+    "caught": 2,
+    "missed": 1,
+    "wrongOnCleanLines": 0,
+    "extraShownOnErrorLines": 0,
+    "errors": [
+      {
+        "lineId": "l2",
+        "kind": "gender article",
+        "scripted": "Queria uma café e um pastel de nata, por favor.",
+        "heard": "Queria uma café e um pastel de nata, por favor.",
+        "expected": "um café",
+        "status": "caught",
+        "reason": "caught"
+      },
+      {
+        "lineId": "l4",
+        "kind": "verb form",
+        "scripted": "Eu não sabe quanto custa o galão.",
+        "heard": "Eu não sabe quanto custa o galão.",
+        "expected": "sei",
+        "status": "caught",
+        "reason": "caught"
+      },
+      {
+        "lineId": "l5",
+        "kind": "missing contraction",
+        "scripted": "Gosto muito de o café daqui.",
+        "heard": "Gosto muito de um café daqui.",
+        "expected": "do café",
+        "status": "missed",
+        "reason": "the heard text is not the scripted line"
+      }
+    ]
+  }
+}
