@@ -8,6 +8,7 @@ import type { Scenario } from "../scenario/validate";
 import { classifyMicError, MIC_PROBLEM_COPY } from "./briefContent";
 import { createConversationPanel, type PanelHandle } from "./ConversationPanel";
 import { createDebugFooter, type CallCounts, type Kind } from "./DebugFooter";
+import { mountScene, type MountedScene } from "../scene/mount";
 import { notice } from "./dom";
 import { buildConfirmedTurn, createHeardConfirm, type ConfirmedTurn } from "./HeardConfirm";
 import { bindSpaceBar, createMic } from "./Mic";
@@ -280,8 +281,17 @@ export async function createPlay(scenario: Scenario): Promise<Screen> {
     if (!ended && !disposed) void toggleMic();
   });
 
+  // The conversation starts first. The scene mounts after it and can fail on its own.
+  let sceneView: MountedScene | undefined;
   const startTimer = setTimeout(() => {
-    if (!disposed) void conversation.start();
+    if (disposed) return;
+    void conversation.start();
+    try {
+      const sample = import.meta.env.DEV && new URLSearchParams(location.search).get("scene") === "sample";
+      sceneView = mountScene(panel.sceneRoot, scenario, { sample });
+    } catch (e) {
+      console.warn("scene mount failed", e);
+    }
   }, 0);
 
   return {
@@ -295,6 +305,7 @@ export async function createPlay(scenario: Scenario): Promise<Screen> {
       unbindSpace();
       silence.end();
       listenCtl?.abort();
+      sceneView?.dispose();
       (globalThis as { speechSynthesis?: SpeechSynthesis }).speechSynthesis?.cancel();
     },
   };

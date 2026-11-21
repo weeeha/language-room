@@ -633,6 +633,52 @@ li {
   font-weight: 600;
 }
 
+.scene-canvas-host {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.scene-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.scene-canvas:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -4px;
+}
+
+.scene-surface > .overlay,
+.scene-surface > .scene-extras {
+  position: relative;
+  z-index: 1;
+}
+
+.scene-status {
+  width: min(100%, 320px);
+}
+
+.scene-status .progress {
+  margin-top: 0;
+}
+
+.scene-status .status {
+  margin-bottom: 0;
+}
+
+.scene-failed {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.scene-failed p {
+  margin: 0;
+}
+
 .scene-extras {
   display: flex;
   flex-direction: column;
