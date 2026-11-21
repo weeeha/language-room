@@ -44,4 +44,12 @@ The owner asked the run to take the recommended option at every gate and to reco
 
 23. **One executor per phase from here, one commit per task.** Phases 3 to 5 are outlines, and usage is near the weekly cap.
 24. **The scene viewer is built against the free Spark sample room from the phase 0 spike.** The café export is a paid step. The sample loads only through a development switch and is labelled as a sample.
+26. **Phase 5 built without teacher interviews.** The plan asks for interviews first. Every assumption about teachers is listed in `docs/authoring-assumptions.md` to test later.
+27. **Scene helper built without the Marble API.** It shows the prompt to copy and takes an exported file. Calling the API is a paid step.
+28. **Share links carry the scenario text inside the URL.** The spec rules out accounts and server storage, so a link is the only way to pass a local scenario to a class.
+29. **Review sign-off is trust based.** A typed name and a confirmation box. There are no accounts to check it against.
+30. **Tasks 17, 21 and 23 have a synthetic stand-in only.** The macOS voice Joana plays a scripted learner through Whisper and the loop. The sheets say so in their first lines. The real-input test stays open.
+31. **The steps judge stays strict.** After three prompt rounds it stops ending sessions early, but on the synthetic run it also failed to mark the last step, so that session did not end by itself. A session that runs on until the learner presses End costs less than one cut short. Needs another look with a stronger model.
+32. **Task 27 skipped.** It needs the Quest 3 headset.
+
 25. **Correction chips arrive about 25 seconds after the learner line on the local model.** The checker keeps reasoning on for accuracy. The reply itself is not delayed. Revisit when a faster or paid model is approved.
