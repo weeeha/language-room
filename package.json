@@ -16,7 +16,8 @@
     "print:prompt": "tsx scripts/print-prompt.ts",
     "timing:tts": "tsx scripts/tts-timing.ts",
     "loop:live": "tsx scripts/loop-live.ts",
-    "steps:live": "tsx scripts/steps-live.ts"
+    "steps:live": "tsx scripts/steps-live.ts",
+    "recap:live": "tsx scripts/recap-live.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

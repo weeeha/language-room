@@ -4,6 +4,7 @@ import { createBrief } from "./ui/Brief";
 import { h, installSprite } from "./ui/dom";
 import { createLibrary } from "./ui/Library";
 import { createPlay } from "./ui/Play";
+import { createRecap } from "./ui/Recap";
 import { paths } from "./ui/routes";
 import { findScenario } from "./ui/scenarios";
 import { startRouter, type Screen } from "./ui/router";
@@ -36,8 +37,10 @@ if (root) {
         const entry = findScenario(route.id);
         return entry ? createPlay(entry.scenario) : textScreen("Scenario not found", "Scenario not found");
       }
-      case "recap":
-        return textScreen("Recap", "Recap is not built yet");
+      case "recap": {
+        const entry = findScenario(route.id);
+        return entry ? createRecap(entry.scenario, route.sessionId) : textScreen("Scenario not found", "Scenario not found");
+      }
       default:
         return textScreen("Page not found", "Page not found");
     }

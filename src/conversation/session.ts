@@ -1,4 +1,5 @@
 // Session log (docs/spec.md section 4.2). Text and timings only: audio is never stored.
+import type { Recap } from "../recap/build";
 import type { Issue } from "./corrections";
 
 export interface Turn {
@@ -26,6 +27,8 @@ export interface Session {
   stepsDone: string[];
   providers: { stt: string; llm: string; analyzer: string; reviewer: string; tts: string };
   errors: { at: number; where: string; message: string }[];
+  /** The built recap, kept so reopening it is instant and stable. */
+  recap?: Recap;
 }
 
 export interface SessionStore {

@@ -55,7 +55,7 @@ export function createLibrary(opts: { dev?: boolean } = {}): Screen {
           h(
             "ul",
             {},
-            ...unlisted.map((e) => h("li", {}, h("a", { href: paths.brief(e.scenario.id) }, e.scenario.title))),
+            ...unlisted.map((e) => h("li", {}, h("a", { class: "tap", href: paths.brief(e.scenario.id) }, e.scenario.title))),
           ),
         ),
       );
@@ -76,7 +76,7 @@ export function createLibrary(opts: { dev?: boolean } = {}): Screen {
           "p",
           { class: "last-recap" },
           `Last recap: ${entry.scenario.title} `,
-          h("a", { href: paths.recap(last.scenarioId, last.id) }, "Open last recap"),
+          h("a", { class: "tap", href: paths.recap(last.scenarioId, last.id) }, "Open last recap"),
         ),
       );
     })
