@@ -139,6 +139,13 @@ describe("buildCharacterMessages", () => {
 });
 
 describe("buildSilencePrompt", () => {
+  it("carries the conversation so far and tells the character not to greet again", () => {
+    const messages = buildSilencePrompt(cafe(), {}, [{ role: "character", text: "Bom dia. Diga, faz favor." }]);
+    expect(messages.map((m) => m.role)).toEqual(["system", "assistant", "user"]);
+    expect(messages[1]?.content).toBe("Bom dia. Diga, faz favor.");
+    expect(messages[2]?.content).toMatch(/Do not greet them again/);
+  });
+
   it("asks for one short gentle in-character nudge after 20 seconds of silence", () => {
     const messages = buildSilencePrompt(cafe());
     expect(messages[0]?.role).toBe("system");

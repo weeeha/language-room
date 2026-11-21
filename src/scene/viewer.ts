@@ -1,6 +1,7 @@
 // The scene viewer: three.js plus Spark in a container, with look-around only.
 import type * as ThreeNs from "three";
 import type { Scene, Vec3 } from "../scenario/validate";
+import { createFpsMeter, type FpsMeter } from "./fps";
 import { applyDrag, applyKey, anglesFromSpawn, type Angles } from "./lookaround";
 import { classifyLoadError, loadScene, SceneLoadError, type LoadedScene } from "./loader";
 import { toScreen, type ScreenPoint } from "./screen";
@@ -47,6 +48,7 @@ export function createSceneViewer(container: HTMLElement, opts: ViewerOptions): 
   let three: ThreeNs.Scene | undefined;
   let canvas: HTMLCanvasElement | undefined;
   let resizeObserver: ResizeObserver | undefined;
+  let meter: FpsMeter | undefined;
   const cleanups: (() => void)[] = [];
 
   function setState(state: ViewerState, err?: SceneLoadError): void {
@@ -67,6 +69,7 @@ export function createSceneViewer(container: HTMLElement, opts: ViewerOptions): 
     if (!renderer || !three || !camera || disposed) return;
     camera.updateMatrixWorld();
     renderer.render(three, camera);
+    meter?.frame();
     for (const fn of [...frameListeners]) fn();
   }
 
@@ -126,22 +129,19 @@ export function createSceneViewer(container: HTMLElement, opts: ViewerOptions): 
     });
   }
 
+  // Frames count only while the render loop runs. A paused scene draws on demand, which is logged as such.
   function startFpsLog(): void {
-    const startedAt = performance.now();
-    let frames = 0;
-    let logged = false;
-    const off = (fn: () => void): void => void frameListeners.delete(fn);
-    const count = (): void => {
-      if (logged) return;
-      frames += 1;
-      const elapsed = performance.now() - startedAt;
-      if (elapsed >= FPS_WINDOW_MS) {
-        logged = true;
-        off(count);
-        console.info("scene fps", { fps: Math.round((frames / elapsed) * 1000), seconds: Math.round(elapsed / 1000) });
-      }
-    };
-    frameListeners.add(count);
+    const m = createFpsMeter({ now: () => performance.now(), windowMs: FPS_WINDOW_MS });
+    meter = m;
+    m.setActive(!paused);
+    const timer = setInterval(() => {
+      const report = m.sample();
+      if (!report) return;
+      clearInterval(timer);
+      if (report.kind === "continuous") console.info("scene fps", { fps: report.fps, seconds: report.seconds });
+      else console.info("scene fps: drawn on demand, no continuous loop", { frames: report.frames, seconds: report.seconds });
+    }, 500);
+    cleanups.push(() => clearInterval(timer));
   }
 
   async function init(): Promise<void> {
@@ -276,10 +276,12 @@ export function createSceneViewer(container: HTMLElement, opts: ViewerOptions): 
     },
     pause() {
       paused = true;
+      meter?.setActive(false);
     },
     resume() {
       if (!paused) return;
       paused = false;
+      meter?.setActive(true);
       renderOnce();
     },
     dispose() {

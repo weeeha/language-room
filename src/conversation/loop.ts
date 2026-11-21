@@ -18,7 +18,14 @@ export type LoopEvent =
   | { type: "issues"; turnId: string; issues: Issue[] }
   | { type: "steps"; stepsDone: string[] }
   | { type: "state"; state: "idle" | "replying" | "ended" }
-  | { type: "error"; where: "reply" | "corrections" | "tts" | "steps"; message: string; retryable: boolean };
+  | {
+      type: "error";
+      where: "reply" | "corrections" | "tts" | "steps";
+      message: string;
+      retryable: boolean;
+      /** Set on a reply error: true when the character did not answer within the time limit. */
+      timedOut?: boolean;
+    };
 
 export interface Conversation {
   readonly session: Session;
@@ -56,6 +63,13 @@ const silentTts: TtsProvider = {
     // Text-only mode: nothing to play.
   },
 };
+
+class ReplyTimeoutError extends Error {
+  constructor() {
+    super("The character took too long to answer");
+    this.name = "ReplyTimeoutError";
+  }
+}
 
 function messageOf(e: unknown): string {
   return e instanceof Error ? e.message : String(e);
@@ -105,9 +119,14 @@ export function createConversation(
     return saveChain;
   }
 
-  function fail(where: "reply" | "corrections" | "tts" | "steps", message: string, retryable: boolean): void {
+  function fail(
+    where: "reply" | "corrections" | "tts" | "steps",
+    message: string,
+    retryable: boolean,
+    timedOut?: boolean,
+  ): void {
     session.errors.push({ at: now(), where, message });
-    emit({ type: "error", where, message, retryable });
+    emit({ type: "error", where, message, retryable, ...(timedOut === undefined ? {} : { timedOut }) });
   }
 
   let replying = false;
@@ -150,7 +169,7 @@ export function createConversation(
     const timeout = new Promise<never>((_, reject) => {
       timer = setTimeout(() => {
         ctl.abort();
-        reject(new Error("The character took too long to answer"));
+        reject(new ReplyTimeoutError());
       }, replyTimeoutMs);
     });
 
@@ -212,7 +231,7 @@ export function createConversation(
       if (!live()) return;
       dropPartial();
       needsRetry = withLatency;
-      fail("reply", messageOf(e), true);
+      fail("reply", messageOf(e), true, e instanceof ReplyTimeoutError);
       await persist();
     } finally {
       clearTimeout(timer);
@@ -312,7 +331,7 @@ export function createConversation(
 
     async nudge() {
       if (ended || replying) return;
-      await reply(buildSilencePrompt(scenario, stepsOpts()), false);
+      await reply(buildSilencePrompt(scenario, stepsOpts(), history()), false);
     },
 
     report(turnId) {

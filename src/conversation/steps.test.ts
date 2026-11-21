@@ -29,6 +29,10 @@ describe("parseStepsOutput", () => {
     expect(parseStepsOutput('Here you go:\n```json\n{"done":["pay"]}\n```', ids)).toEqual(["pay"]);
     expect(parseStepsOutput('["greet"]', ids)).toEqual(["greet"]);
   });
+  it("drops a step the model also listed as missing a part", () => {
+    expect(parseStepsOutput('{"missing":["order: a pastel de nata"],"done":["greet","order"]}', ids)).toEqual(["greet"]);
+    expect(parseStepsOutput('{"missing":[],"done":["greet","order"]}', ids)).toEqual(["greet", "order"]);
+  });
   it("returns null for garbage", () => {
     expect(parseStepsOutput("I think they ordered.", ids)).toBeNull();
     expect(parseStepsOutput("{bad", ids)).toBeNull();
@@ -51,6 +55,14 @@ function fake(reply: () => string, seen?: { req?: unknown }): LlmProvider {
     },
   };
 }
+
+describe("buildStepsMessages", () => {
+  it("tells the judge that every part of a hint must be covered", () => {
+    const system = buildStepsMessages({ scenario, history: [], stepsDone: [] })[0]?.content ?? "";
+    expect(system).toMatch(/every part/);
+    expect(system).toMatch(/"missing"/);
+  });
+});
 
 describe("judgeSteps", () => {
   const history = [{ role: "learner" as const, text: "Bom dia." }];

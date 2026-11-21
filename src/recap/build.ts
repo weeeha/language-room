@@ -103,26 +103,38 @@ function isAuthored(phrase: string, session: Session, scenario: Scenario): boole
   );
 }
 
+/** Keeps the order, but moves phrases the learner already used correctly to the end. */
+function usedLast(list: Candidate[], used: Set<string>): Candidate[] {
+  return [...list.filter((c) => !used.has(normalize(c.phrase))), ...list.filter((c) => used.has(normalize(c.phrase)))];
+}
+
+/**
+ * Practise order: phrases from mistakes, then unmet targets, then other targets, then lines
+ * the learner said without a correction. Inside each group, a phrase the learner already used
+ * correctly comes after the ones they did not.
+ */
 function candidates(session: Session, scenario: Scenario, mistakes: RecapMistake[]): Candidate[] {
-  const list: Candidate[] = [];
+  const used = new Set(phrasesUsed(session, scenario).map(normalize));
+  const fromMistakes: Candidate[] = [];
   for (const m of mistakes) {
     const exact = scenario.targets.phrases.find((t) => normalize(t) === normalize(m.corrected));
     if (exact) {
-      list.push({ phrase: m.corrected, source: "mistake" });
+      fromMistakes.push({ phrase: m.corrected, source: "mistake" });
       continue;
     }
-    // A longer corrected line is not authored text, so the target inside it is practised instead.
-    const inside = scenario.targets.phrases.find((t) => containsPhrase(m.corrected, t));
-    if (inside) list.push({ phrase: inside, source: "mistake" });
+    // A longer corrected line is not authored text, so a target inside it is practised instead.
+    const contained = scenario.targets.phrases.filter((t) => containsPhrase(m.corrected, t));
+    const inside = contained.find((t) => !used.has(normalize(t))) ?? contained[0];
+    if (inside) fromMistakes.push({ phrase: inside, source: "mistake" });
   }
-  for (const p of unmetTargets(session, scenario)) list.push({ phrase: p, source: "unmet-target" });
-  for (const p of scenario.targets.phrases) list.push({ phrase: p, source: "target" });
+  const unmet: Candidate[] = unmetTargets(session, scenario).map((phrase) => ({ phrase, source: "unmet-target" }));
+  const others: Candidate[] = scenario.targets.phrases.map((phrase) => ({ phrase, source: "target" }));
   // Last resort for a scenario with very few targets: lines the learner said that carry no correction.
   const flagged = new Set(recapIssues(session.issues).map((i) => i.turnId));
-  for (const t of learnerTurns(session)) {
-    if (!flagged.has(t.id)) list.push({ phrase: t.text.trim(), source: "target" });
-  }
-  return list;
+  const lines: Candidate[] = learnerTurns(session)
+    .filter((t) => !flagged.has(t.id))
+    .map((t) => ({ phrase: t.text.trim(), source: "target" }));
+  return [...usedLast(fromMistakes, used), ...usedLast(unmet, used), ...usedLast(others, used), ...lines];
 }
 
 function choose(session: Session, scenario: Scenario, mistakes: RecapMistake[]): Candidate[] {

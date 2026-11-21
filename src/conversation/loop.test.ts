@@ -245,7 +245,7 @@ describe("conversation loop", () => {
       type: "turn-removed",
       turnId: grown && grown.type === "turn" ? grown.turn.id : "missing",
     });
-    expect(events).toContainEqual(expect.objectContaining({ type: "error", where: "reply", retryable: true }));
+    expect(events).toContainEqual(expect.objectContaining({ type: "error", where: "reply", retryable: true, timedOut: true }));
     expect(events.at(-1)).toEqual({ type: "state", state: "idle" });
     await conv.retry();
     expect(conv.session.turns.map((x) => x.role)).toEqual(["learner", "character"]);
@@ -262,7 +262,7 @@ describe("conversation loop", () => {
     });
     await conv.send(turnOf("Bom dia."));
     expect(conv.session.turns).toHaveLength(1);
-    expect(events).toContainEqual({ type: "error", where: "reply", message: "model down", retryable: true });
+    expect(events).toContainEqual({ type: "error", where: "reply", message: "model down", retryable: true, timedOut: false });
   });
 
   it("ends with reason goal when every step is done, after the reply finished", async () => {
@@ -385,6 +385,30 @@ describe("conversation loop", () => {
     await conv.nudge();
     expect(conv.session.turns.map((x) => x.role)).toEqual(["character", "character"]);
     expect(requests.at(-1)?.messages.at(-1)?.content).toContain("said nothing for 20 seconds");
+  });
+
+  it("start does nothing when the conversation already has turns, or is already starting", async () => {
+    const { conv, requests } = setup();
+    const first = conv.start();
+    await conv.start();
+    await first;
+    await conv.start();
+    expect(conv.session.turns.map((x) => x.role)).toEqual(["character"]);
+    expect(requests.filter((r) => r.messages.at(-1)?.content.includes("Greet"))).toHaveLength(1);
+    const again = setup();
+    await again.conv.send(turnOf("Bom dia."));
+    const before = again.conv.session.turns.length;
+    await again.conv.start();
+    expect(again.conv.session.turns).toHaveLength(before);
+  });
+
+  it("sends the transcript with the silence prompt, so the nudge is not a second greeting", async () => {
+    const { conv, requests } = setup();
+    await conv.start();
+    await conv.nudge();
+    const nudge = requests.at(-1)?.messages ?? [];
+    expect(nudge.some((m) => m.role === "assistant" && m.content.includes("Bom dia"))).toBe(true);
+    expect(nudge.at(-1)?.content).toContain("Do not greet them again");
   });
 
   it("marks a character line as reported", async () => {

@@ -229,6 +229,30 @@ describe("buildRecap", () => {
     expect(["Bom dia", "Queria um café, por favor"]).toContain(recap.practise[0]?.phrase);
   });
 
+  it("ranks a mistake phrase the learner later said correctly after one they did not", async () => {
+    const s = session(
+      [
+        turn("l1", "learner", "Queria uma café, por favor."),
+        turn("l2", "learner", "Queria um café, por favor."),
+        turn("l3", "learner", "A conta, por favour."),
+      ],
+      [
+        issue({ id: "i1", turnId: "l1" }),
+        issue({ id: "i2", turnId: "l3", span: "por favour", suggestion: "por favor", rule: "Spelling" }),
+      ],
+    );
+    const recap = await buildRecap({ llm: llmOf(() => "{}"), reviewer: reviewerOk() }, s, scenario);
+    expect(recap.practise.map((p) => p.phrase)).toEqual(["A conta, por favor.", "Queria um café, por favor.", "Bom dia"]);
+    expect(recap.practise.map((p) => p.source)).toEqual(["mistake", "mistake", "unmet-target"]);
+  });
+
+  it("puts target phrases already used correctly last within the unmet and other groups", async () => {
+    const s = session([turn("l1", "learner", "Bom dia."), turn("l2", "learner", "Queria um café, por favor.")]);
+    const recap = await buildRecap({ llm: llmOf(() => "{}"), reviewer: reviewerOk() }, s, scenario);
+    expect(recap.practise.map((p) => p.phrase)).toEqual(["A conta, por favor", "Quanto é?", "Bom dia"]);
+    expect(recap.practise.map((p) => p.source)).toEqual(["unmet-target", "unmet-target", "target"]);
+  });
+
   it("has exactly three practise phrases with a one-turn session", async () => {
     const s = session([turn("c0", "character", "Bom dia."), turn("l1", "learner", "Bom dia.")]);
     const recap = await buildRecap({ llm: llmOf(() => "{}"), reviewer: reviewerOk() }, s, scenario);

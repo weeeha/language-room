@@ -255,6 +255,7 @@ Recap states:
 - Scene failed, exact: "Scene unavailable, continuing without it". The conversation works as normal.
 - Speech returned nothing: "We did not hear anything. Press the microphone and speak again."
 - LLM timeout: "Dona Amélia did not answer in time. Your line is kept." Action: Retry.
+- Reply failed for any other reason (added after review): "Dona Amélia could not answer. Your line is kept." Action: Retry. The character name comes from the scenario.
 - TTS failed: "Audio is unavailable for this line. Showing text only." The character line stays in the transcript.
 - Learner silent for 20 seconds, spoken and shown from the character: "Precisa de ajuda? Diga, faz favor." (5 words). Under it, a hint from the current goal step: "Hint: Ask for a coffee and a pastel de nata."
 - Very long learner line: the "What I heard" box scrolls after 6 lines, and the Send button stays visible.

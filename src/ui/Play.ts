@@ -13,6 +13,7 @@ import { mountScene, type MountedScene } from "../scene/mount";
 import { notice } from "./dom";
 import { buildConfirmedTurn, createHeardConfirm, type ConfirmedTurn } from "./HeardConfirm";
 import { bindSpaceBar, createMic } from "./Mic";
+import { replyErrorCopy } from "./replyError";
 import { paths } from "./routes";
 import type { Screen } from "./router";
 import { getStore, loadRuntime } from "./runtime";
@@ -230,7 +231,7 @@ export async function createPlay(scenario: Scenario): Promise<Screen> {
         if (e.where === "reply") {
           if (nudging) break;
           panel.setNotice(
-            notice(`${name} did not answer in time. Your line is kept.`, {
+            notice(replyErrorCopy(name, e.timedOut === true), {
               error: true,
               action: { label: "Retry", onClick: retry },
             }),

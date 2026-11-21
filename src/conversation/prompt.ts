@@ -104,12 +104,20 @@ export function buildCharacterMessages(
   ];
 }
 
-export function buildSilencePrompt(scenario: Scenario, opts: PromptOptions = {}): LlmMessage[] {
+/**
+ * The line the character says after a quiet stretch. It gets the conversation so far, so it does not
+ * greet again or repeat itself.
+ */
+export function buildSilencePrompt(
+  scenario: Scenario,
+  opts: PromptOptions = {},
+  history: PromptTurn[] = [],
+): LlmMessage[] {
   return [
-    { role: "system", content: buildCharacterSystemPrompt(scenario, opts) },
+    ...buildCharacterMessages(scenario, history, opts),
     {
       role: "user",
-      content: `The learner has said nothing for 20 seconds. Say one short, gentle line in character, in ${scenario.language.name}, to invite them to go on. Do not mention that they were silent for a long time.`,
+      content: `The learner has said nothing for 20 seconds. Say one short, gentle line in character, in ${scenario.language.name}, to invite them to go on. Do not greet them again and do not repeat a line you already said. Do not mention that they were silent for a long time.`,
     },
   ];
 }
