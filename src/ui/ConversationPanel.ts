@@ -3,8 +3,9 @@
 import type { Issue } from "../conversation/corrections";
 import type { Turn } from "../conversation/session";
 import type { Scenario } from "../scenario/validate";
+import { UNREVIEWED_WARNING } from "../author/review";
 import { chipsFor } from "./chips";
-import { h, icon, signageNotice } from "./dom";
+import { h, icon, notice, signageNotice } from "./dom";
 
 export interface PanelCallbacks {
   onReport(turnId: string): void;
@@ -109,6 +110,7 @@ export function createConversationPanel(scenario: Scenario, cb: PanelCallbacks):
     "div",
     { class: "panel conversation" },
     h("h1", {}, scenario.title),
+    scenario.reviewed ? null : notice(UNREVIEWED_WARNING),
     h("h2", {}, "Conversation"),
     empty,
     transcript,

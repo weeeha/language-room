@@ -34,3 +34,14 @@ The fresh-eyes reviewer subagent step was skipped on purpose: this task may not 
 - `render.mjs` cannot see the recap with data: it opens a fresh browser profile and the session lives in IndexedDB. The populated recap was measured for overflow and read from a screenshot only, not run through the contrast and state-stability checks. Its colours come from the same tokens as the draft.
 - Impeccable (`npx impeccable detect`) was not run: it downloads a package and the task allows no installs.
 - Safari was not checked.
+
+## Authoring screens (tasks 24 to 26)
+
+- `rules.mjs check` over `Author.ts`, `AuthorList.ts`, `AuthorScene.ts`, `AuthorReview.ts`, `ImportShare.ts` and `styles.css`: 1 reflex WARN, no errors. `render.mjs` was not run: it opens a fresh profile and the screens need saved data, so the screens were measured by hand (below).
+- LAY-4 WARN, `repeat(3, minmax(...))` in `.number-row`: three equal columns for the X, Y and Z number inputs. They are one coordinate, so equal columns are the right shape. Waived on the record, not a card grid.
+- RSP-1: `scrollWidth` equals `clientWidth` (375 of 375) on `/author`, `/author/new` with every section filled, in light and dark, read over a headless Chrome session.
+- CMP-7, one filled control: the form has Save filled. Sign off, Make share link and the scene buttons are outlined. The list page has New scenario filled.
+- STA-1 states: list empty, list with items, delete confirm step, import error, form errors (summary plus field text, `aria-invalid`), scene not loaded, scene failed to load, share link too long, invalid share link. Checked by running them.
+- CPY: no exclamation marks and no em dashes in the new UI text.
+- Not checked: Safari, the scene viewer with a live scene in a screenshot (the headless capture hung while the WebGL scene drew, so placement was checked by numbers and DOM, not by image), screen reader output.
+- Found outside this task: `.scene-surface > .overlay { display: none }` in `styles.css` hides the name tag, the sample label and the placing panel on the conversation page (computed display is none in a loaded scene). The authoring preview uses its own `.author-surface` class and is not affected. Left as is.

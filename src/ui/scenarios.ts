@@ -38,8 +38,34 @@ export function bundledScenarios(): ScenarioEntry[] {
   return cached;
 }
 
-export function findScenario(id: string, dev: boolean = import.meta.env.DEV): ScenarioEntry | undefined {
-  return availableEntries(bundledScenarios(), dev).find((e) => e.scenario.id === id);
+/** A bundled scenario by id. A direct link opens it in every build, reviewed or not. */
+export function findScenario(id: string): ScenarioEntry | undefined {
+  return bundledScenarios().find((e) => e.scenario.id === id);
+}
+
+/**
+ * What the library lists: reviewed scenarios only, bundled and local, sorted by title.
+ * A local scenario never takes the place of a bundled one with the same id.
+ */
+export function libraryEntries(bundled: ScenarioEntry[], local: ScenarioEntry[]): ScenarioEntry[] {
+  const ids = new Set(bundled.map((e) => e.scenario.id));
+  return [...bundled, ...local.filter((e) => !ids.has(e.scenario.id))]
+    .filter((e) => e.listed)
+    .sort((a, b) => a.scenario.title.localeCompare(b.scenario.title));
+}
+
+/** Every local scenario that still validates. */
+export async function localEntries(store: ScenarioStore = getScenarioStore()): Promise<ScenarioEntry[]> {
+  try {
+    const out: ScenarioEntry[] = [];
+    for (const record of await store.list()) {
+      const entry = localEntry(record);
+      if (entry) out.push(entry);
+    }
+    return out;
+  } catch {
+    return [];
+  }
 }
 
 /** The entry for a scenario made or imported in this browser. A record that no longer validates is skipped. */

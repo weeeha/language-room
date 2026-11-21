@@ -9,6 +9,7 @@ import { paths } from "./ui/routes";
 import { resolveScenario } from "./ui/scenarios";
 import { createAuthor } from "./ui/Author";
 import { createAuthorList } from "./ui/AuthorList";
+import { createImportShare } from "./ui/ImportShare";
 import { startRouter, type Screen } from "./ui/router";
 
 function textScreen(title: string, message: string): Screen {
@@ -43,6 +44,8 @@ if (root) {
         const entry = await resolveScenario(route.id);
         return entry ? createRecap(entry.scenario, route.sessionId) : textScreen("Scenario not found", "Scenario not found");
       }
+      case "import":
+        return createImportShare();
       case "author":
         return createAuthorList();
       case "author-edit":

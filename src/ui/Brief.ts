@@ -1,4 +1,5 @@
 // Brief screen (port of draft/brief.html), with a real microphone check.
+import { UNREVIEWED_WARNING } from "../author/review";
 import type { SttProvider } from "../providers/stt";
 import type { Scenario } from "../scenario/validate";
 import { audioNotice, briefContent, classifyMicError, MIC_PROBLEM_COPY, type MicProblem } from "./briefContent";
@@ -7,7 +8,7 @@ import { paths } from "./routes";
 import type { Screen } from "./router";
 import { loadRuntime } from "./runtime";
 
-export const UNREVIEWED_NOTICE = "This scenario is not yet reviewed by a fluent speaker.";
+export const UNREVIEWED_NOTICE = UNREVIEWED_WARNING;
 const CHECKING = "Checking your microphone.";
 const AUTO_STOP_MS = 8_000;
 

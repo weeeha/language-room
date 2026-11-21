@@ -1,19 +1,17 @@
 // Authoring list (route /author): scenarios made in this browser, duplicate from a bundled one, import.
 import { duplicateScenario, importText } from "../author/form";
+import { reviewLine } from "../author/review";
+import { bundledLink } from "../author/share";
 import { getScenarioStore, type LocalScenario, type ScenarioStore } from "../author/store";
 import { h } from "./dom";
-import type { Screen } from "./router";
+import { goTo, type Screen } from "./router";
 import { paths } from "./routes";
 import { bundledScenarios } from "./scenarios";
 import { SHIP_TEXT, LOCAL_TEXT } from "./Author";
 
 export const EMPTY_AUTHOR_LIST = "You have not written a scenario in this browser yet.";
 
-function reviewText(s: LocalScenario["scenario"]): string {
-  return s.reviewed ? `Reviewed by ${s.reviewed.by} on ${s.reviewed.on}` : "Not reviewed";
-}
-
-export function createAuthorList(store: ScenarioStore = getScenarioStore(), navigate: (path: string) => void = defaultNavigate): Screen {
+export function createAuthorList(store: ScenarioStore = getScenarioStore(), navigate: (path: string) => void = goTo): Screen {
   const listHost = h("div", {});
   const status = h("p", { class: "status", role: "status" });
   const importErrors = h("div", {});
@@ -62,7 +60,7 @@ export function createAuthorList(store: ScenarioStore = getScenarioStore(), navi
       "li",
       { class: "list-row" },
       title,
-      h("p", { class: "muted" }, `${s.language.name}, ${s.level}. Version ${s.version}. ${reviewText(s)}.`),
+      h("p", { class: "muted" }, `${s.language.name}, ${s.level}. Version ${s.version}. ${reviewLine(s.reviewed)}.`),
       h("div", { class: "actions" }, h("a", { class: "btn btn-small", href: paths.authorEdit(s.id), "aria-label": `Edit ${s.title}` }, "Edit"), del, confirmSlot),
     );
   }
@@ -83,7 +81,23 @@ export function createAuthorList(store: ScenarioStore = getScenarioStore(), navi
     ...bundled.map((e) => {
       const btn = h("button", { class: "btn btn-small", type: "button", "aria-label": `Duplicate ${e.scenario.title}` }, "Duplicate");
       btn.addEventListener("click", () => void duplicate(e.scenario.id));
-      return h("li", { class: "list-row" }, h("p", { class: "label" }, e.scenario.title), h("p", { class: "muted" }, `${e.scenario.language.name}, ${e.scenario.level}.`), btn);
+      const linkOut = h("span", { class: "status", role: "status" });
+      const copy = h("button", { class: "btn btn-small", type: "button", "aria-label": `Copy link to ${e.scenario.title}` }, "Copy link");
+      copy.addEventListener("click", () => {
+        const link = bundledLink(location.origin, e.scenario.id);
+        navigator.clipboard.writeText(link).then(
+          () => void (linkOut.textContent = `Copied ${link}`),
+          () => void (linkOut.textContent = link),
+        );
+      });
+      return h(
+        "li",
+        { class: "list-row" },
+        h("p", { class: "label" }, e.scenario.title),
+        h("p", { class: "muted" }, `${e.scenario.language.name}, ${e.scenario.level}. ${reviewLine(e.scenario.reviewed)}.`),
+        h("div", { class: "actions" }, btn, copy),
+        linkOut,
+      );
     }),
   );
 
@@ -149,9 +163,4 @@ export function createAuthorList(store: ScenarioStore = getScenarioStore(), navi
       gone = true;
     },
   };
-}
-
-function defaultNavigate(path: string): void {
-  history.pushState({}, "", path);
-  window.dispatchEvent(new PopStateEvent("popstate"));
 }

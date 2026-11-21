@@ -1,8 +1,9 @@
 // Library screen (port of draft/index.html). Lists reviewed scenarios.
+import { reviewLine } from "../author/review";
 import { h } from "./dom";
 import { lastFinishedSession } from "./lastRecap";
 import { paths } from "./routes";
-import { availableEntries, bundledScenarios, type ScenarioEntry } from "./scenarios";
+import { availableEntries, bundledScenarios, libraryEntries, localEntries, type ScenarioEntry } from "./scenarios";
 import type { Screen } from "./router";
 import { getStore } from "./runtime";
 
@@ -29,6 +30,7 @@ function card(entry: ScenarioEntry): HTMLElement {
       fact("Place", s.place.name),
       fact("Goal", s.goal.description),
     ),
+    h("p", { class: "muted" }, `${reviewLine(s.reviewed)}.`),
     h("a", { class: "btn", href: paths.brief(s.id) }, "Open scenario"),
   );
 }
@@ -36,10 +38,15 @@ function card(entry: ScenarioEntry): HTMLElement {
 export function createLibrary(opts: { dev?: boolean } = {}): Screen {
   const dev = opts.dev ?? import.meta.env.DEV;
   const all = bundledScenarios();
-  const listed = all.filter((e) => e.listed);
   const root = h("div", {}, h("h1", {}, "Scenarios"));
-  if (listed.length === 0) root.append(h("p", { class: "muted" }, EMPTY_LIBRARY));
-  for (const entry of listed) root.append(card(entry));
+  // Reviewed scenarios only: the bundled ones now, and the ones saved in this browser once they load.
+  const listHost = h("div", {});
+  function renderList(local: ScenarioEntry[]): void {
+    const listed = libraryEntries(all, local);
+    listHost.replaceChildren(...(listed.length === 0 ? [h("p", { class: "muted" }, EMPTY_LIBRARY)] : listed.map((e) => card(e))));
+  }
+  renderList([]);
+  root.append(listHost);
 
   const recapSlot = h("div", {});
   root.append(recapSlot);
@@ -64,13 +71,16 @@ export function createLibrary(opts: { dev?: boolean } = {}): Screen {
   }
 
   let gone = false;
-  void getStore()
-    .list()
-    .then((sessions) => {
+  const localLoaded = localEntries().then((local) => {
+    if (!gone && local.length > 0) renderList(local);
+    return local;
+  });
+  void Promise.all([getStore().list(), localLoaded])
+    .then(([sessions, local]) => {
       if (gone) return;
       const last = lastFinishedSession(sessions);
       if (!last) return;
-      const entry = all.find((e) => e.scenario.id === last.scenarioId);
+      const entry = [...all, ...local].find((e) => e.scenario.id === last.scenarioId);
       if (!entry) return;
       recapSlot.append(
         h(

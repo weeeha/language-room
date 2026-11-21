@@ -132,7 +132,7 @@ export function createSceneSection(ctx: AuthorCtx): { element: HTMLElement; disp
           rebuildOverlays();
         } else if (state === "failed") {
           loadMsg.hidden = false;
-          loadMsg.textContent = `The scene could not be loaded${err ? `: ${err.message}` : ""}. Check that the file is an SPZ or PLY export, then choose it again.`;
+          loadMsg.textContent = err?.reason === "webgl" ? "This browser cannot draw the scene. You can still place items by typing numbers." : "The scene could not be loaded. Check that the file is an SPZ or PLY export, then choose it again.";
         }
       },
     });

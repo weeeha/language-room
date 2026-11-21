@@ -80,3 +80,9 @@ export function startRouter(root: HTMLElement, resolve: Resolver): { navigate(pa
   void render(true);
   return { navigate };
 }
+
+/** Moves to a path from inside a screen. The router renders it like a link click. */
+export function goTo(path: string): void {
+  history.pushState({}, "", path);
+  window.dispatchEvent(new PopStateEvent("popstate"));
+}

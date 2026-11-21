@@ -1174,3 +1174,23 @@ li {
 .field textarea[readonly] {
   background: var(--tint);
 }
+
+/* Review section */
+
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+}
+
+.check-row input {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+}
+
+.check-label {
+  min-height: 24px;
+}

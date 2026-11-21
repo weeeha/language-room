@@ -35,6 +35,8 @@ import { ADDRESS_CHANGED, type Screen } from "./router";
 import { paths } from "./routes";
 import { bundledScenarios, resolveScenario } from "./scenarios";
 import { createSceneSection } from "./AuthorScene";
+import { createReviewSection, createShareSection } from "./AuthorReview";
+import { applySignOff, REVIEW_CLEARED_NOTICE, reconcileReview, type SignOffInput } from "../author/review";
 
 export const SHIP_TEXT =
   "To ship a scenario with the app, put the exported file in the scenarios folder of the project and run npm run validate:scenarios.";
@@ -55,6 +57,10 @@ export interface AuthorCtx {
   save(): Promise<boolean>;
   /** True when the form passes every check. Shows the errors when it does not. */
   checkAll(): boolean;
+  /** True after a sign-off was removed because reviewed text changed. */
+  reviewCleared(): boolean;
+  /** Writes the reviewed block and saves. Sign-off is the one way a review is added. */
+  signOff(input: SignOffInput): Promise<boolean>;
 }
 
 function ctlId(key: string): string {
@@ -183,8 +189,17 @@ export async function createAuthor(id: string, store: ScenarioStore = getScenari
     refreshErrors();
     for (const fn of listeners) fn();
   }
+  let reviewClearedFlag = false;
+  // The scenario that a sign-off was given on. Changing reviewed text away from it clears the sign-off.
+  let baseline: Scenario | undefined = saved;
   function setState(fn: (s: FormState) => FormState): void {
     state = fn(state);
+    const reviewed = reconcileReview(state, baseline);
+    if (reviewed.cleared) {
+      state = reviewed.state;
+      reviewClearedFlag = true;
+      announce(REVIEW_CLEARED_NOTICE);
+    }
     changed();
   }
 
@@ -481,6 +496,7 @@ export async function createAuthor(id: string, store: ScenarioStore = getScenari
       return false;
     }
     saved = result.scenario;
+    baseline = saved;
     const wasNew = state.isNew;
     state = { ...state, isNew: false };
     idInput.readOnly = true;
@@ -518,8 +534,26 @@ export async function createAuthor(id: string, store: ScenarioStore = getScenari
     announce,
     save,
     checkAll,
+    reviewCleared: () => reviewClearedFlag,
+    async signOff(input) {
+      if (!checkAll()) return false;
+      const before = state;
+      state = applySignOff(state, input);
+      baseline = buildScenario(state, version());
+      reviewClearedFlag = false;
+      changed();
+      const ok = await save();
+      if (!ok) {
+        state = before;
+        baseline = saved;
+        changed();
+      }
+      return ok;
+    },
   };
   const sceneSection = createSceneSection(ctx);
+  const reviewSection = createReviewSection(ctx);
+  const shareSection = createShareSection(ctx);
   const form = h(
     "form",
     { class: "author-form", novalidate: true },
@@ -529,6 +563,8 @@ export async function createAuthor(id: string, store: ScenarioStore = getScenari
     goalSection,
     wordsSection,
     sceneSection.element,
+    reviewSection.element,
+    shareSection.element,
   );
 
   form.append(h("h2", {}, "Save and export"), savedLine, h("p", { class: "muted" }, SHIP_TEXT), actions);
