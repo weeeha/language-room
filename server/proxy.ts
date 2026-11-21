@@ -103,7 +103,7 @@ export function createProxy(opts: ProxyOptions = {}) {
     return id;
   }
 
-  async function handleLlm(body: Record<string, unknown>): Promise<{ text: string }> {
+  async function localPayload(body: Record<string, unknown>, stream: boolean): Promise<string> {
     const provider = body.provider;
     if (provider === "claude") {
       if (!paidOn()) throw new HttpError(403, "Paid providers are off");
@@ -116,10 +116,15 @@ export function createProxy(opts: ProxyOptions = {}) {
     if (typeof body.temperature === "number") payload.temperature = body.temperature;
     if (typeof body.maxTokens === "number") payload.max_tokens = body.maxTokens;
     if (body.json === true) payload.response_format = { type: "json_object" };
+    if (stream) payload.stream = true;
+    return JSON.stringify(payload);
+  }
+
+  async function handleLlm(body: Record<string, unknown>): Promise<{ text: string }> {
     const res = await upstream(`${localUrl()}/chat/completions`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(payload),
+      body: await localPayload(body, false),
     });
     if (!res.ok) throw new HttpError(502, `Local model answered ${res.status}`);
     const data = (await res.json().catch(() => null)) as {
@@ -128,6 +133,69 @@ export function createProxy(opts: ProxyOptions = {}) {
     const text = data?.choices?.[0]?.message?.content;
     if (typeof text !== "string") throw new HttpError(502, "Local model reply had no text");
     return { text };
+  }
+
+  /** Pulls the text out of one SSE event block, or null for [DONE] and events without text. */
+  function sseText(block: string): string | null {
+    let out: string | null = null;
+    for (const line of block.split(/\r?\n/)) {
+      if (!line.startsWith("data:")) continue;
+      const data = line.slice(5).trim();
+      if (data === "" || data === "[DONE]") continue;
+      try {
+        const parsed = JSON.parse(data) as { choices?: { delta?: { content?: string } }[] };
+        const piece = parsed.choices?.[0]?.delta?.content;
+        if (typeof piece === "string" && piece.length > 0) out = (out ?? "") + piece;
+      } catch {
+        // A malformed event is skipped.
+      }
+    }
+    return out;
+  }
+
+  async function handleLlmStream(body: Record<string, unknown>, res: ServerResponse): Promise<void> {
+    const up = await upstream(`${localUrl()}/chat/completions`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: await localPayload(body, true),
+    });
+    if (!up.ok) throw new HttpError(502, `Local model answered ${up.status}`);
+    if (!up.body) throw new HttpError(502, "Local model reply had no body");
+    const reader = up.body.getReader();
+    res.on("close", () => void reader.cancel().catch(() => undefined));
+    const decoder = new TextDecoder();
+    let pending = "";
+    let started = false;
+    const write = (text: string | null) => {
+      if (text === null) return;
+      if (!started) {
+        res.writeHead(200, {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "no-cache",
+          "X-Accel-Buffering": "no",
+        });
+        started = true;
+      }
+      res.write(text);
+    };
+    try {
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        pending += decoder.decode(value, { stream: true });
+        for (;;) {
+          const m = /\r?\n\r?\n/.exec(pending);
+          if (!m) break;
+          write(sseText(pending.slice(0, m.index)));
+          pending = pending.slice(m.index + m[0].length);
+        }
+      }
+      write(sseText(pending));
+    } catch {
+      if (!started) throw new HttpError(502, "Local model stream failed");
+    }
+    if (!started) throw new HttpError(502, "Local model reply had no text");
+    res.end();
   }
 
   /** Returns true when the request was handled. */
@@ -149,6 +217,14 @@ export function createProxy(opts: ProxyOptions = {}) {
           throw new HttpError(400, "Body must be an object");
         }
         send(res, 200, await handleLlm(body as Record<string, unknown>));
+        return true;
+      }
+      if (method === "POST" && url === "/api/llm/stream") {
+        const body = await readJson(req);
+        if (typeof body !== "object" || body === null || Array.isArray(body)) {
+          throw new HttpError(400, "Body must be an object");
+        }
+        await handleLlmStream(body as Record<string, unknown>, res);
         return true;
       }
       if (method === "POST" && (url === "/api/stt/local" || url.startsWith("/api/stt/local?"))) {

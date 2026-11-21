@@ -17,4 +17,6 @@ export interface LlmProvider {
   label: string;
   paid: boolean;
   complete(req: LlmRequest): Promise<{ text: string }>;
+  /** Optional. Calls onDelta with each piece of text as it arrives. */
+  completeStream?(req: LlmRequest, onDelta: (text: string) => void): Promise<{ text: string }>;
 }

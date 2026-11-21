@@ -150,3 +150,75 @@ describe("health still works", () => {
     expect((await api.get("/health")).status).toBe(200);
   });
 });
+
+function sseFetch(events: string[], opts: { status?: number } = {}) {
+  return vi.fn(async (url: string | URL | Request, ...rest: [RequestInit?]) => {
+    const u = String(url);
+    if (u.endsWith("/models")) {
+      return new Response(JSON.stringify({ data: [{ id: "m1" }] }), { status: 200 });
+    }
+    const body = JSON.parse(String(rest[0]?.body ?? "{}")) as Record<string, unknown>;
+    sseFetch.lastBody = body;
+    if (opts.status) return new Response("nope", { status: opts.status });
+    const enc = new TextEncoder();
+    return new Response(
+      new ReadableStream<Uint8Array>({
+        start(c) {
+          for (const e of events) c.enqueue(enc.encode(e));
+          c.close();
+        },
+      }),
+      { status: 200, headers: { "content-type": "text/event-stream" } },
+    );
+  });
+}
+sseFetch.lastBody = {} as Record<string, unknown>;
+
+const delta = (t: string) => `data: ${JSON.stringify({ choices: [{ delta: { content: t } }] })}\n\n`;
+
+describe("POST /api/llm/stream", () => {
+  it("turns upstream SSE into plain text chunks, including events split across reads", async () => {
+    const whole = delta("Bom dia.");
+    const f = sseFetch([
+      `data: ${JSON.stringify({ choices: [{ delta: { role: "assistant" } }] })}\n\n`,
+      whole.slice(0, 15),
+      whole.slice(15),
+      delta(" Diga"),
+      delta(", faz favor."),
+      "data: [DONE]\n\n",
+    ]);
+    const api = await start({}, f as unknown as typeof fetch);
+    const res = await api.post("/api/llm/stream", {
+      provider: "local",
+      messages: [{ role: "user", content: "oi" }],
+      maxTokens: 30,
+    });
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toBe("text/plain; charset=utf-8");
+    expect(await res.text()).toBe("Bom dia. Diga, faz favor.");
+    expect(sseFetch.lastBody.stream).toBe(true);
+    expect(sseFetch.lastBody.max_tokens).toBe(30);
+    expect(sseFetch.lastBody.model).toBe("m1");
+  });
+
+  it("answers 502 json when the upstream errors before the first byte", async () => {
+    const f = sseFetch([], { status: 500 });
+    const api = await start({}, f as unknown as typeof fetch);
+    const res = await api.post("/api/llm/stream", { provider: "local", messages: [] });
+    expect(res.status).toBe(502);
+    expect(res.headers.get("content-type")).toContain("application/json");
+    expect((await res.json()).error).toContain("500");
+  });
+
+  it("answers 403 for claude when paid is off and 501 when on, with no outbound request", async () => {
+    const f = sseFetch([]);
+    const off = await start({ PAID_PROVIDERS: "off" }, f as unknown as typeof fetch);
+    const r1 = await off.post("/api/llm/stream", { provider: "claude", messages: [] });
+    expect(r1.status).toBe(403);
+    await new Promise<void>((r) => server!.close(() => r()));
+    const on = await start({ PAID_PROVIDERS: "on" }, f as unknown as typeof fetch);
+    const r2 = await on.post("/api/llm/stream", { provider: "claude", messages: [] });
+    expect(r2.status).toBe(501);
+    expect(f).toHaveBeenCalledTimes(0);
+  });
+});

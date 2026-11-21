@@ -13,7 +13,8 @@
     "eval": "tsx eval/run-gold.ts",
     "eval:stt:synthetic": "tsx eval/stt/run-synthetic.ts",
     "validate:scenarios": "tsx scripts/validate-scenarios.ts",
-    "print:prompt": "tsx scripts/print-prompt.ts"
+    "print:prompt": "tsx scripts/print-prompt.ts",
+    "timing:tts": "tsx scripts/tts-timing.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
