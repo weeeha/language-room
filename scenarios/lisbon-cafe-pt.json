@@ -1,0 +1,42 @@
+{
+  "id": "lisbon-cafe-pt",
+  "version": 1,
+  "title": "Coffee at a Lisbon café",
+  "language": { "code": "pt-PT", "name": "European Portuguese" },
+  "level": "A2",
+  "place": {
+    "name": "Pastelaria in Alfama",
+    "scene": {
+      "file": "media/lisbon-cafe/scene-500k.spz",
+      "format": "spz",
+      "source": "marble",
+      "prompt": "A small Lisbon pastelaria, tiled walls, glass pastry counter, espresso machine, two tables by the window",
+      "spawn": { "position": [0, 1.6, 2], "lookAt": [0, 1.4, -1] }
+    },
+    "hotspots": [
+      { "id": "pastel-de-nata", "position": [0.4, 1.0, -0.8], "word": "o pastel de nata", "gloss": "custard tart" }
+    ],
+    "signage": [
+      { "id": "menu", "anchor": [1.2, 1.8, -1.5], "text": "Café 1,00 | Galão 1,60 | Pastel de nata 1,30" }
+    ]
+  },
+  "character": {
+    "name": "Dona Amélia",
+    "role": "café owner behind the counter",
+    "persona": "Friendly, a little hurried, speaks clearly, repeats once when asked.",
+    "voice": { "tts": "default-pt-PT-female", "rate": 0.85 }
+  },
+  "goal": {
+    "description": "Order a coffee and a pastry, then ask for the bill.",
+    "steps": [
+      { "id": "greet", "hint": "Say good morning." },
+      { "id": "order", "hint": "Ask for a coffee and a pastel de nata." },
+      { "id": "pay", "hint": "Ask for the bill and say thank you." }
+    ],
+    "completion": "all steps done or learner ends the scene"
+  },
+  "targets": {
+    "phrases": ["Bom dia", "Queria um café, por favor", "A conta, por favor", "Quanto é?"],
+    "grammar": ["polite request with 'queria'", "indefinite articles um/uma"]
+  }
+}

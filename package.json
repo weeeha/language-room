@@ -8,8 +8,9 @@
     "build": "tsc --noEmit && vite build",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src server",
-    "server": "tsx server/index.ts"
+    "lint": "eslint src server scripts",
+    "server": "tsx server/index.ts",
+    "validate:scenarios": "tsx scripts/validate-scenarios.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
