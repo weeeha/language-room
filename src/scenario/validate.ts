@@ -27,6 +27,8 @@ export interface Scene {
   format: SceneFormat;
   source?: string;
   prompt?: string;
+  /** Other files for the same scene. low is for slow networks. */
+  tiers?: { low?: string; default?: string };
   spawn: { position: Vec3; lookAt: Vec3 };
 }
 
@@ -173,6 +175,13 @@ function checkScene(c: Checker, scene: Obj, path: string): void {
   }
   c.optionalText(scene, "source", `${path}.source`);
   c.optionalText(scene, "prompt", `${path}.prompt`);
+  if (scene.tiers !== undefined) {
+    if (!isObj(scene.tiers)) c.fail(`${path}.tiers`, "must be an object");
+    else {
+      c.optionalText(scene.tiers, "low", `${path}.tiers.low`);
+      c.optionalText(scene.tiers, "default", `${path}.tiers.default`);
+    }
+  }
   const spawn = c.object(scene, "spawn", `${path}.spawn`);
   if (spawn) {
     c.vec3(spawn, "position", `${path}.spawn.position`);

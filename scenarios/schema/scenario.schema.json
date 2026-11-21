@@ -31,6 +31,13 @@
             "format": { "enum": ["spz", "ply"] },
             "source": { "$ref": "#/$defs/text" },
             "prompt": { "$ref": "#/$defs/text" },
+            "tiers": {
+              "type": "object",
+              "properties": {
+                "low": { "$ref": "#/$defs/text" },
+                "default": { "$ref": "#/$defs/text" }
+              }
+            },
             "spawn": {
               "type": "object",
               "required": ["position", "lookAt"],

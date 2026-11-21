@@ -752,6 +752,11 @@ li {
   margin-bottom: 0;
 }
 
+.scene-notice {
+  position: relative;
+  z-index: 1;
+}
+
 .scene-failed {
   display: flex;
   align-items: flex-start;

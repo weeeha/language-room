@@ -57,4 +57,15 @@ describe("validateScenario", () => {
     expect(result.valid).toBe(false);
     if (!result.valid) expect(result.errors.join("\n")).toContain("character.anchor");
   });
+
+  it("accepts optional scene tiers and rejects a bad one", () => {
+    const input = validScenario();
+    const scene = (input.place as Record<string, Record<string, unknown>>).scene as Record<string, unknown>;
+    scene.tiers = { low: "media/lisbon-cafe/scene-100k.spz" };
+    expect(validateScenario(input).valid).toBe(true);
+    scene.tiers = { low: "" };
+    const bad = validateScenario(input);
+    expect(bad.valid).toBe(false);
+    if (!bad.valid) expect(bad.errors.join("\n")).toContain("tiers.low");
+  });
 });

@@ -8,6 +8,7 @@ import type { Scenario } from "../scenario/validate";
 import { classifyMicError, MIC_PROBLEM_COPY } from "./briefContent";
 import { createConversationPanel, type PanelHandle } from "./ConversationPanel";
 import { createDebugFooter, type CallCounts, type Kind } from "./DebugFooter";
+import { startConversationThenScene } from "../scene/fallback";
 import { mountScene, type MountedScene } from "../scene/mount";
 import { notice } from "./dom";
 import { buildConfirmedTurn, createHeardConfirm, type ConfirmedTurn } from "./HeardConfirm";
@@ -285,15 +286,15 @@ export async function createPlay(scenario: Scenario): Promise<Screen> {
   let sceneView: MountedScene | undefined;
   const startTimer = setTimeout(() => {
     if (disposed) return;
-    void conversation.start();
-    try {
-      const query = new URLSearchParams(location.search);
-      const sample = import.meta.env.DEV && query.get("scene") === "sample";
-      const place = import.meta.env.DEV && query.get("place") === "1";
-      sceneView = mountScene(panel.sceneRoot, scenario, { sample, place });
-    } catch (e) {
-      console.warn("scene mount failed", e);
-    }
+    startConversationThenScene(
+      () => void conversation.start(),
+      () => {
+        const query = new URLSearchParams(location.search);
+        const sample = import.meta.env.DEV && query.get("scene") === "sample";
+        const place = import.meta.env.DEV && query.get("place") === "1";
+        sceneView = mountScene(panel.sceneRoot, scenario, { sample, place });
+      },
+    );
   }, 0);
 
   return {

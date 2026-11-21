@@ -68,6 +68,18 @@ export function createSceneViewer(container: HTMLElement, opts: ViewerOptions): 
     for (const fn of [...frameListeners]) fn();
   }
 
+  // Spark sorts splats after a frame is drawn and then asks for another one. While paused
+  // (a closed phone header) that follow-up frame is drawn here, so the header is not black.
+  let dirtyQueued = false;
+  function onDirty(): void {
+    if (!paused || dirtyQueued || disposed) return;
+    dirtyQueued = true;
+    requestAnimationFrame(() => {
+      dirtyQueued = false;
+      if (paused) renderOnce();
+    });
+  }
+
   function resize(): void {
     if (!renderer || !camera) return;
     const { w, h } = size();
@@ -156,7 +168,7 @@ export function createSceneViewer(container: HTMLElement, opts: ViewerOptions): 
       container.prepend(canvas);
 
       three = new THREE.Scene();
-      three.add(new Spark.SparkRenderer({ renderer }));
+      three.add(new Spark.SparkRenderer({ renderer, onDirty }));
       three.add(splat);
       const { w, h } = size();
       camera = new THREE.PerspectiveCamera(60, w / h, 0.01, 1000);
