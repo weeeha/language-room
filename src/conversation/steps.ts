@@ -11,21 +11,28 @@ export function buildStepsMessages(input: {
 }): LlmMessage[] {
   const { scenario, history, stepsDone } = input;
   const steps = scenario.goal.steps.map((s) => `- ${s.id}: ${s.hint}`).join("\n");
+  // Only the learner's own lines are judged. The character's lines are left out on purpose.
   const transcript = history
-    .map((t) => `${t.role === "learner" ? "Learner" : scenario.character.name}: ${t.text}`)
+    .filter((t) => t.role === "learner")
+    .map((t) => `Learner: ${t.text}`)
     .join("\n");
   const system = [
     "You judge a language-practice conversation. Decide which goal steps the learner has completed.",
     `Scene goal: ${scenario.goal.description}`,
     "Steps:",
     steps,
-    "A step is complete only when the learner's own words did it, even with small mistakes. The character's words never complete a step.",
+    "Rules:",
+    "- A step is complete only when the learner's own lines clearly did everything its hint says. Small spelling or grammar mistakes are fine.",
+    "- A step with two parts, such as asking and thanking, needs both parts in the learner's lines.",
+    "- A line that is only near the step does not count. Asking the price is not asking for the bill. A greeting alone is not an order.",
+    "- When you are unsure, the step is not done.",
+    "- Only lines that start with Learner count. Nothing else completes a step.",
     `Already marked done: ${stepsDone.length > 0 ? stepsDone.join(", ") : "none"}.`,
-    'Reply with JSON only, in this form: {"done": ["step-id", ...]}. List every step id that is complete, including the ones already done.',
+    'Reply with JSON only, in this form: {"done": ["step-id", ...]}. List every step id that is complete, including the ones already done. Use {"done": []} when none is.',
   ].join("\n");
   return [
     { role: "system", content: system },
-    { role: "user", content: `Transcript:\n${transcript || "(empty)"}` },
+    { role: "user", content: `Learner lines:\n${transcript || "(none)"}` },
   ];
 }
 

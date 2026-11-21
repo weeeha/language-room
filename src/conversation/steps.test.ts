@@ -73,4 +73,15 @@ describe("judgeSteps", () => {
     expect(text).toContain("Learner: Bom dia.");
     expect(text).toContain("Already marked done: greet");
   });
+  it("leaves the character's lines out and tells the model to be strict", () => {
+    const mixed = [
+      { role: "character" as const, text: "Quer a conta agora?" },
+      { role: "learner" as const, text: "Quanto é?" },
+    ];
+    const text = buildStepsMessages({ scenario, history: mixed, stepsDone: [] }).map((m) => m.content).join("\n");
+    expect(text).not.toContain("Quer a conta agora");
+    expect(text).toContain("Learner: Quanto é?");
+    expect(text).toContain("When you are unsure, the step is not done");
+    expect(text).toContain("Asking the price is not asking for the bill");
+  });
 });

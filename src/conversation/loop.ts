@@ -14,6 +14,7 @@ import { judgeSteps } from "./steps";
 
 export type LoopEvent =
   | { type: "turn"; turn: Turn }
+  | { type: "turn-removed"; turnId: string }
   | { type: "issues"; turnId: string; issues: Issue[] }
   | { type: "steps"; stepsDone: string[] }
   | { type: "state"; state: "idle" | "replying" | "ended" }
@@ -160,6 +161,7 @@ export function createConversation(
       if (characterTurn) {
         const i = session.turns.indexOf(characterTurn);
         if (i !== -1) session.turns.splice(i, 1);
+        emit({ type: "turn-removed", turnId: characterTurn.id });
       }
     };
 

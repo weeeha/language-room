@@ -239,6 +239,12 @@ describe("conversation loop", () => {
     });
     await conv.send(turnOf("Bom dia."));
     expect(conv.session.turns.map((x) => x.role)).toEqual(["learner"]);
+    const grown = events.find((e) => e.type === "turn" && e.turn.role === "character");
+    expect(grown).toBeDefined();
+    expect(events).toContainEqual({
+      type: "turn-removed",
+      turnId: grown && grown.type === "turn" ? grown.turn.id : "missing",
+    });
     expect(events).toContainEqual(expect.objectContaining({ type: "error", where: "reply", retryable: true }));
     expect(events.at(-1)).toEqual({ type: "state", state: "idle" });
     await conv.retry();

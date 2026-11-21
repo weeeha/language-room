@@ -15,7 +15,8 @@
     "validate:scenarios": "tsx scripts/validate-scenarios.ts",
     "print:prompt": "tsx scripts/print-prompt.ts",
     "timing:tts": "tsx scripts/tts-timing.ts",
-    "loop:live": "tsx scripts/loop-live.ts"
+    "loop:live": "tsx scripts/loop-live.ts",
+    "steps:live": "tsx scripts/steps-live.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
