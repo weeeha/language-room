@@ -161,6 +161,8 @@ Library states:
 - Microphone check passed: "Microphone works. We heard: Bom dia."
 - Signage notice, exact: "Text on signs inside the generated scene may be wrong. Use the labels shown by the app."
 - Start button label: Start conversation
+- Optional note above the Start button: "The check is optional."
+- Plain link under the Start button: "Back to library"
 
 Brief states:
 
@@ -265,3 +267,10 @@ Recap states:
 - The space bar toggles the microphone when focus is not in a text field.
 - Every control reachable by Tab, in reading order. Focus ring per 1.5.
 - Captions always on, with no switch.
+
+### 2.8 Draft only copy (added in the task 7 audit)
+
+- Note shown after a control that has no behaviour in the draft: "Coming soon".
+- Correction chip: pressing it shows the same sentence as the tooltip, below the chip, so touch users can read it.
+- States page, section "All screens": "Hover and focus", "Dark mode", the sentences under them, the link labels "Library in dark mode", "Brief in dark mode", "Scene in dark mode", "Recap in dark mode", and the button "Open the scene screen". The pages also read `?theme=dark` or `?theme=light` to force a theme.
+- Library card title in the long-title state uses the h2 style on a paragraph, so the wrap is the real one.

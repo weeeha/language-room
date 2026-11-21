@@ -46,7 +46,7 @@
 <li class="line line-char">
 <p class="who">Dona Amélia</p>
 <p class="say" lang="pt-PT">Bom dia. Diga, faz favor.</p>
-<button class="btn btn-plain btn-small" type="button">Report a mistake</button>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
 </li>
 <li class="line line-learner">
 <p class="who">You</p>
@@ -56,18 +56,18 @@
 <li class="line line-char">
 <p class="who">Dona Amélia</p>
 <p class="say" lang="pt-PT">Bom dia. O que vai ser?</p>
-<button class="btn btn-plain btn-small" type="button">Report a mistake</button>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
 </li>
 <li class="line line-learner">
 <p class="who">You</p>
 <p class="say" lang="pt-PT">Queria uma café, por favor.</p>
-<div class="chip-row"><button class="chip" type="button" title="Café is masculine, so it takes um." aria-describedby="chip-note"><strong lang="pt-PT">um café</strong><span>Article gender</span></button>
-<span class="sr-only" id="chip-note">Café is masculine, so it takes um.</span></div>
+<div class="chip-row"><button data-chip class="chip" type="button" title="Café is masculine, so it takes um." aria-describedby="chip-note" aria-expanded="false"><strong lang="pt-PT">um café</strong><span>Article gender</span></button>
+<p class="chip-note" id="chip-note">Café is masculine, so it takes um.</p></div>
 </li>
 <li class="line line-char">
 <p class="who">Dona Amélia</p>
 <p class="say" lang="pt-PT">Já trago o café. Mais alguma coisa?</p>
-<button class="btn btn-plain btn-small" type="button">Report a mistake</button>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
 </li>
 <li class="line line-learner">
 <p class="who">You</p>
@@ -77,7 +77,7 @@
 <li class="line line-char">
 <p class="who">Dona Amélia</p>
 <p class="say" lang="pt-PT">São dois euros e trinta.</p>
-<button class="btn btn-plain btn-small" type="button">Report a mistake</button>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
 </li>
 </ol>
 <div class="confirm" role="group" aria-labelledby="heard-label" data-confirm>
@@ -86,11 +86,11 @@
 <textarea class="heard-edit" rows="2" lang="pt-PT" aria-labelledby="heard-label" data-heard-edit hidden></textarea>
 <div class="actions">
 <button class="btn" type="button" aria-pressed="false" data-edit>Edit</button>
-<button class="btn btn-primary" type="button">Send</button>
+<button data-soon class="btn btn-primary" type="button">Send</button>
 </div>
 </div>
 <div class="mic-row">
-<button class="btn mic" type="button" aria-labelledby="mic-scene"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg></button>
+<button data-mic class="btn mic" type="button" aria-labelledby="mic-scene"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg></button>
 <p class="mic-label" id="mic-scene">Start speaking</p>
 </div>
 <h2>Goal</h2>

@@ -136,6 +136,13 @@ h4 {
   line-height: 1.3;
 }
 
+.card-title {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
 h2:first-child,
 h3:first-child {
   margin-top: 0;
@@ -403,6 +410,11 @@ li {
   margin-bottom: var(--space-1);
 }
 
+.tap {
+  display: inline-block;
+  padding: var(--space-1) 0;
+}
+
 .last-recap {
   margin-top: var(--space-5);
 }
@@ -552,6 +564,28 @@ li {
   background: var(--hover);
 }
 
+.chip-note {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.js .chip[aria-expanded="false"] ~ .chip-note {
+  display: none;
+}
+
+.soon {
+  align-self: center;
+  margin-left: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.mic[data-on="true"] {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
 .chip span {
   color: var(--color-text-muted);
 }
@@ -682,10 +716,6 @@ li {
   border-radius: 0;
 }
 
-.scene-layout h1 {
-  font-size: var(--text-xl);
-}
-
 /* Recap and states */
 
 .practise li {
@@ -749,6 +779,11 @@ li {
   h3 {
     font-size: var(--text-lg);
   }
+
+  .card-title {
+    font-size: var(--text-xl);
+    line-height: 1.25;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -778,10 +813,6 @@ li {
     grid-row: 1;
     border-width: 1px;
     border-radius: var(--radius-md);
-  }
-
-  .scene-layout h1 {
-    font-size: var(--text-2xl);
   }
 
   .scene {

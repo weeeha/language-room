@@ -41,12 +41,12 @@
 <section class="state" aria-labelledby="lib-error">
 <h3 id="lib-error">Library, error</h3>
 <div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>The scenario list could not be loaded. Check that the app is running, then press Try again.</p>
-<button class="btn" type="button">Try again</button></div></div>
+<button data-soon class="btn" type="button">Try again</button></div></div>
 </section>
 <section class="state" aria-labelledby="lib-long">
 <h3 id="lib-long">Library, long title</h3>
 <article class="card" aria-labelledby="lib-long-title">
-<h4 id="lib-long-title">Coffee and a pastry at a small, family run Lisbon café in the old town</h4>
+<p class="card-title" id="lib-long-title">Coffee and a pastry at a small, family run Lisbon café in the old town</p>
 <dl class="facts">
 <div><dt>Language</dt><dd>European Portuguese</dd></div>
 <div><dt>Level</dt><dd>A2</dd></div>
@@ -60,7 +60,7 @@
 <section class="state" aria-labelledby="br-empty">
 <h3 id="br-empty">Brief, check not run yet</h3>
 <p>Press the microphone button and say "<span lang="pt-PT">Bom dia</span>". Your words appear below the button. Check that they match what you said.</p>
-<div class="mic-row"><button class="btn" type="button" aria-labelledby="t-empty"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg><span id="t-empty">Test microphone</span></button></div>
+<div class="mic-row"><button data-soon class="btn" type="button" aria-labelledby="t-empty"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg><span id="t-empty">Test microphone</span></button></div>
 <p class="status" role="status"></p>
 <p><a class="btn btn-primary" href="scene.html">Start conversation</a></p>
 </section>
@@ -75,17 +75,17 @@
 <section class="state" aria-labelledby="br-denied">
 <h3 id="br-denied">Brief, microphone denied</h3>
 <div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>Microphone access is blocked. Allow the microphone for this site in your browser settings, then press Try again. The conversation needs the microphone.</p>
-<button class="btn" type="button">Try again</button></div></div>
+<button data-soon class="btn" type="button">Try again</button></div></div>
 </section>
 <section class="state" aria-labelledby="br-none">
 <h3 id="br-none">Brief, no microphone found</h3>
 <div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>No microphone found. Connect a microphone or headset, then press Check again.</p>
-<button class="btn" type="button">Check again</button></div></div>
+<button data-soon class="btn" type="button">Check again</button></div></div>
 </section>
 <section class="state" aria-labelledby="br-stt">
 <h3 id="br-stt">Brief, speech service unreachable</h3>
 <div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>The speech service did not respond. Check your connection, then press Try again.</p>
-<button class="btn" type="button">Try again</button></div></div>
+<button data-soon class="btn" type="button">Try again</button></div></div>
 </section>
 <section class="state" aria-labelledby="br-long">
 <h3 id="br-long">Brief, long persona</h3>
@@ -104,7 +104,7 @@
 <section class="state" aria-labelledby="sc-empty">
 <h3 id="sc-empty">Scene, empty transcript</h3>
 <div class="panel demo-panel">
-<h4 class="sr-only">Conversation</h4><p class="empty-line">Dona Amélia is about to speak.</p>
+<p class="sr-only">Conversation</p><p class="empty-line">Dona Amélia is about to speak.</p>
 </div>
 </section>
 <section class="state" aria-labelledby="sc-speaking">
@@ -114,7 +114,7 @@
 <li class="line line-char">
 <p class="who">Dona Amélia</p>
 <p class="say" lang="pt-PT">Bom dia. Diga, faz favor.</p>
-<button class="btn btn-plain btn-small" type="button">Report a mistake</button>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
 </li>
 </ol>
 <p class="speaking"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-speaker"/></svg>Speaking</p>
@@ -124,11 +124,11 @@
 <h3 id="sc-mic">Scene, microphone toggle</h3>
 <div class="panel demo-panel">
 <div class="mic-row">
-<button class="btn mic btn-primary" type="button" aria-labelledby="mic-a"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg></button>
+<button data-soon class="btn mic btn-primary" type="button" aria-labelledby="mic-a"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg></button>
 <p class="mic-label" id="mic-a">Start speaking</p>
 </div>
 <div class="mic-row">
-<button class="btn mic btn-primary" type="button" aria-labelledby="mic-b"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-stop"/></svg></button>
+<button data-soon class="btn mic btn-primary" type="button" aria-labelledby="mic-b"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-stop"/></svg></button>
 <p class="mic-label" id="mic-b">Stop speaking</p>
 </div>
 </div>
@@ -140,7 +140,7 @@
 <section class="state" aria-labelledby="sc-llm">
 <h3 id="sc-llm">Scene, LLM timeout</h3>
 <div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>Dona Amélia did not answer in time. Your line is kept.</p>
-<button class="btn" type="button">Retry</button></div></div>
+<button data-soon class="btn" type="button">Retry</button></div></div>
 </section>
 <section class="state" aria-labelledby="sc-tts">
 <h3 id="sc-tts">Scene, audio failed</h3>
@@ -149,7 +149,7 @@
 <li class="line line-char">
 <p class="who">Dona Amélia</p>
 <p class="say" lang="pt-PT">Já trago o café. Mais alguma coisa?</p>
-<button class="btn btn-plain btn-small" type="button">Report a mistake</button>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
 </li>
 </ol>
 <div class="notice"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><p>Audio is unavailable for this line. Showing text only.</p></div>
@@ -162,7 +162,7 @@
 <li class="line line-char">
 <p class="who">Dona Amélia</p>
 <p class="say" lang="pt-PT">Precisa de ajuda? Diga, faz favor.</p>
-<button class="btn btn-plain btn-small" type="button">Report a mistake</button>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
 </li>
 </ol>
 <p class="hint">Hint: Ask for a coffee and a <span lang="pt-PT">pastel de nata</span>.</p>
@@ -177,14 +177,15 @@
 <textarea class="heard-edit" rows="2" lang="pt-PT" aria-labelledby="heard-long-label" data-heard-edit hidden></textarea>
 <div class="actions">
 <button class="btn" type="button" aria-pressed="false" data-edit>Edit</button>
-<button class="btn btn-primary" type="button">Send</button>
+<button data-soon class="btn btn-primary" type="button">Send</button>
 </div>
 </div>
 </div>
 </section>
 <section class="state" aria-labelledby="sc-phone">
 <h3 id="sc-phone">Scene, small screen</h3>
-<p>At 375 px the scene collapses to a 160 px header with a "Show scene" button, then "Hide scene" when open. See <a href="scene.html">the scene screen</a> at phone width.</p>
+<p>At 375 px the scene collapses to a 160 px header with a "Show scene" button, then "Hide scene" when open. Without script the header stays open and nothing is hidden. Every other screen is built at 375 px first and has no horizontal scroll.</p>
+<p><a class="btn" href="scene.html">Open the scene screen</a></p>
 </section>
 <h2>Recap</h2>
 <section class="state" aria-labelledby="rc-none">
@@ -233,7 +234,7 @@
 <section class="state" aria-labelledby="rc-error">
 <h3 id="rc-error">Recap, error</h3>
 <div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>The recap could not be built. Your transcript is saved. Press Try again.</p>
-<button class="btn" type="button">Try again</button></div></div>
+<button data-soon class="btn" type="button">Try again</button></div></div>
 </section>
 <section class="state" aria-labelledby="rc-long">
 <h3 id="rc-long">Recap, long learner line</h3>
@@ -242,6 +243,22 @@
 <div><dt>Corrected form</dt><dd lang="pt-PT">Bom dia, queria um café com leite e um pastel de nata, por favor, e também queria saber quanto é tudo e se posso pagar com cartão, porque hoje tenho pouco tempo e preciso de ir trabalhar depois do pequeno-almoço.</dd></div>
 <div><dt>Reason</dt><dd>Café is masculine, so it takes um.</dd></div>
 </dl>
+</section>
+<h2>All screens</h2>
+<section class="state" aria-labelledby="all-hover">
+<h3 id="all-hover">Hover and focus</h3>
+<p>Hover tints a control. Focus draws a 2 px outline. Neither changes the size of anything. Press Tab on any screen to see the focus outline.</p>
+<p><a class="btn" href="brief.html">Open the brief</a></p>
+</section>
+<section class="state" aria-labelledby="all-dark">
+<h3 id="all-dark">Dark mode</h3>
+<p>Every screen follows the system setting. These links force it on one screen.</p>
+<ul>
+<li><a class="tap" href="index.html?theme=dark">Library in dark mode</a></li>
+<li><a class="tap" href="brief.html?theme=dark">Brief in dark mode</a></li>
+<li><a class="tap" href="scene.html?theme=dark">Scene in dark mode</a></li>
+<li><a class="tap" href="recap.html?theme=dark">Recap in dark mode</a></li>
+</ul>
 </section>
 </div>
 </main>
