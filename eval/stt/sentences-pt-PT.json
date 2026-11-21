@@ -1,0 +1,247 @@
+{
+  "language": "pt-PT",
+  "status": "not yet reviewed by a fluent speaker",
+  "reviewed": null,
+  "items": [
+    {
+      "id": "e01",
+      "written": "Queria uma café, por favor.",
+      "hasError": true,
+      "errorType": "wrong gender article",
+      "corrected": "Queria um café, por favor.",
+      "note": "café is masculine"
+    },
+    {
+      "id": "e02",
+      "written": "Eu quero um água, por favor.",
+      "hasError": true,
+      "errorType": "wrong gender article",
+      "corrected": "Eu quero uma água, por favor.",
+      "note": "água is feminine"
+    },
+    {
+      "id": "e03",
+      "written": "O mesa está perto da janela.",
+      "hasError": true,
+      "errorType": "wrong gender article",
+      "corrected": "A mesa está perto da janela.",
+      "note": "mesa is feminine"
+    },
+    {
+      "id": "e04",
+      "written": "Ela bebe uma leite com açúcar.",
+      "hasError": true,
+      "errorType": "wrong gender article",
+      "corrected": "Ela bebe um leite com açúcar.",
+      "note": "leite is masculine"
+    },
+    {
+      "id": "e05",
+      "written": "Uma pastel de nata, por favor.",
+      "hasError": true,
+      "errorType": "wrong gender article",
+      "corrected": "Um pastel de nata, por favor.",
+      "note": "pastel is masculine"
+    },
+    {
+      "id": "e06",
+      "written": "A pão está quente.",
+      "hasError": true,
+      "errorType": "wrong gender article",
+      "corrected": "O pão está quente.",
+      "note": "pão is masculine"
+    },
+    {
+      "id": "e07",
+      "written": "Eu queres um chá.",
+      "hasError": true,
+      "errorType": "wrong verb form",
+      "corrected": "Eu quero um chá.",
+      "note": "first person is quero"
+    },
+    {
+      "id": "e08",
+      "written": "Nós vai ao café todos os dias.",
+      "hasError": true,
+      "errorType": "wrong verb form",
+      "corrected": "Nós vamos ao café todos os dias.",
+      "note": "nós takes vamos"
+    },
+    {
+      "id": "e09",
+      "written": "Eles é os meus amigos.",
+      "hasError": true,
+      "errorType": "wrong verb form",
+      "corrected": "Eles são os meus amigos.",
+      "note": "eles takes são"
+    },
+    {
+      "id": "e10",
+      "written": "Tu gosto muito de café.",
+      "hasError": true,
+      "errorType": "wrong verb form",
+      "corrected": "Tu gostas muito de café.",
+      "note": "tu takes gostas"
+    },
+    {
+      "id": "e11",
+      "written": "Eu não sabes o preço.",
+      "hasError": true,
+      "errorType": "wrong verb form",
+      "corrected": "Eu não sei o preço.",
+      "note": "first person is sei"
+    },
+    {
+      "id": "e12",
+      "written": "Onde está casa de banho?",
+      "hasError": true,
+      "errorType": "missing article",
+      "corrected": "Onde está a casa de banho?",
+      "note": "a is missing before casa"
+    },
+    {
+      "id": "e13",
+      "written": "Pode trazer conta, por favor?",
+      "hasError": true,
+      "errorType": "missing article",
+      "corrected": "Pode trazer a conta, por favor?",
+      "note": "a is missing before conta"
+    },
+    {
+      "id": "e14",
+      "written": "Café está muito quente.",
+      "hasError": true,
+      "errorType": "missing article",
+      "corrected": "O café está muito quente.",
+      "note": "o is missing before café"
+    },
+    {
+      "id": "e15",
+      "written": "Eu tenho irmã.",
+      "hasError": true,
+      "errorType": "missing article",
+      "corrected": "Eu tenho uma irmã.",
+      "note": "uma is missing before irmã"
+    },
+    {
+      "id": "e16",
+      "written": "Onde fica estação de comboio?",
+      "hasError": true,
+      "errorType": "missing article",
+      "corrected": "Onde fica a estação de comboio?",
+      "note": "a is missing before estação"
+    },
+    {
+      "id": "e17",
+      "written": "Eu venho de o café.",
+      "hasError": true,
+      "errorType": "wrong preposition contraction",
+      "corrected": "Eu venho do café.",
+      "note": "de plus o is do"
+    },
+    {
+      "id": "e18",
+      "written": "O livro está em o quarto.",
+      "hasError": true,
+      "errorType": "wrong preposition contraction",
+      "corrected": "O livro está no quarto.",
+      "note": "em plus o is no"
+    },
+    {
+      "id": "e19",
+      "written": "Eu gosto de a sopa.",
+      "hasError": true,
+      "errorType": "wrong preposition contraction",
+      "corrected": "Eu gosto da sopa.",
+      "note": "de plus a is da"
+    },
+    {
+      "id": "e20",
+      "written": "Vamos a o cinema hoje.",
+      "hasError": true,
+      "errorType": "wrong preposition contraction",
+      "corrected": "Vamos ao cinema hoje.",
+      "note": "a plus o is ao"
+    },
+    {
+      "id": "c01",
+      "written": "Bom dia, queria um café, por favor.",
+      "hasError": false,
+      "errorType": null,
+      "corrected": "Bom dia, queria um café, por favor.",
+      "note": "correct sentence"
+    },
+    {
+      "id": "c02",
+      "written": "A conta, por favor.",
+      "hasError": false,
+      "errorType": null,
+      "corrected": "A conta, por favor.",
+      "note": "correct sentence"
+    },
+    {
+      "id": "c03",
+      "written": "Sim, um pastel de nata. Quanto é?",
+      "hasError": false,
+      "errorType": null,
+      "corrected": "Sim, um pastel de nata. Quanto é?",
+      "note": "correct sentence"
+    },
+    {
+      "id": "c04",
+      "written": "Eu moro numa cidade pequena.",
+      "hasError": false,
+      "errorType": null,
+      "corrected": "Eu moro numa cidade pequena.",
+      "note": "correct sentence"
+    },
+    {
+      "id": "c05",
+      "written": "O café está muito quente.",
+      "hasError": false,
+      "errorType": null,
+      "corrected": "O café está muito quente.",
+      "note": "correct sentence"
+    },
+    {
+      "id": "c06",
+      "written": "Nós vamos ao cinema hoje.",
+      "hasError": false,
+      "errorType": null,
+      "corrected": "Nós vamos ao cinema hoje.",
+      "note": "correct sentence"
+    },
+    {
+      "id": "c07",
+      "written": "Ela bebe um copo de água.",
+      "hasError": false,
+      "errorType": null,
+      "corrected": "Ela bebe um copo de água.",
+      "note": "correct sentence"
+    },
+    {
+      "id": "c08",
+      "written": "Onde fica a casa de banho?",
+      "hasError": false,
+      "errorType": null,
+      "corrected": "Onde fica a casa de banho?",
+      "note": "correct sentence"
+    },
+    {
+      "id": "c09",
+      "written": "Eu gosto muito da sopa.",
+      "hasError": false,
+      "errorType": null,
+      "corrected": "Eu gosto muito da sopa.",
+      "note": "correct sentence"
+    },
+    {
+      "id": "c10",
+      "written": "Obrigado, até amanhã.",
+      "hasError": false,
+      "errorType": null,
+      "corrected": "Obrigado, até amanhã.",
+      "note": "correct sentence"
+    }
+  ]
+}

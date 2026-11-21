@@ -2,12 +2,15 @@ import { existsSync, readFileSync } from "node:fs";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createLocalStt, LocalSttError, type RunFn } from "./stt-local";
 
 export type Env = Record<string, string | undefined>;
 
 export interface ProxyOptions {
   env?: Env;
   fetch?: typeof fetch;
+  sttRun?: RunFn;
+  fileExists?: (path: string) => boolean;
 }
 
 const DEFAULT_LOCAL_URL = "http://127.0.0.1:11434/v1";
@@ -78,6 +81,7 @@ export function createProxy(opts: ProxyOptions = {}) {
   const paidOn = () => env.PAID_PROVIDERS === "on";
   const localUrl = () => (env.LOCAL_LLM_URL || DEFAULT_LOCAL_URL).replace(/\/+$/, "");
   let cachedModel: string | undefined;
+  const localStt = createLocalStt({ env, run: opts.sttRun, fileExists: opts.fileExists });
 
   async function upstream(url: string, init: RequestInit): Promise<Response> {
     try {
@@ -147,13 +151,19 @@ export function createProxy(opts: ProxyOptions = {}) {
         send(res, 200, await handleLlm(body as Record<string, unknown>));
         return true;
       }
+      if (method === "POST" && (url === "/api/stt/local" || url.startsWith("/api/stt/local?"))) {
+        const lang = new URL(url, "http://localhost").searchParams.get("lang");
+        send(res, 200, await localStt(req, lang));
+        return true;
+      }
       if (method === "POST" && (url === "/api/stt" || url === "/api/tts")) {
         if (!paidOn()) throw new HttpError(403, "Paid providers are off");
         throw new HttpError(501, "Hosted provider is not enabled in this build");
       }
       return false;
     } catch (e) {
-      if (e instanceof HttpError) send(res, e.status, { error: e.message });
+      if (e instanceof LocalSttError) send(res, e.status, { error: e.message });
+      else if (e instanceof HttpError) send(res, e.status, { error: e.message });
       else send(res, 500, { error: "Server error" });
       return true;
     }

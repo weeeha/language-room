@@ -15,4 +15,6 @@ export interface SttProvider {
   label: string;
   paid: boolean;
   listenOnce(opts: { lang: string; signal?: AbortSignal }): Promise<SttResult>;
+  /** Ends the current listen early. The pending listenOnce then resolves with what was heard. */
+  stop?(): void;
 }

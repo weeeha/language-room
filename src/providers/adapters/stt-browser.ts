@@ -44,7 +44,11 @@ function findCtor(): RecognitionCtor | undefined {
 }
 
 export function createBrowserStt(): SttProvider {
+  let active: RecognitionLike | null = null;
   return {
+    stop() {
+      active?.stop();
+    },
     kind: "stt",
     id: "stt-browser",
     label: "Browser speech recognition",
@@ -57,6 +61,7 @@ export function createBrowserStt(): SttProvider {
           return;
         }
         const rec = new Ctor();
+        active = rec;
         rec.lang = opts.lang;
         rec.interimResults = false;
         rec.maxAlternatives = 1;
@@ -65,6 +70,7 @@ export function createBrowserStt(): SttProvider {
         const done = (fn: () => void) => {
           if (settled) return;
           settled = true;
+          if (active === rec) active = null;
           opts.signal?.removeEventListener("abort", onAbort);
           fn();
         };

@@ -1,0 +1,217 @@
+{
+  "engine": "whisper.cpp via /api/stt/local",
+  "voice": "say -v Joana (synthetic, not a learner)",
+  "date": "2026-11-21",
+  "errorSentences": {
+    "total": 20,
+    "kept": 11,
+    "silently-fixed": 3,
+    "other": 6
+  },
+  "correctSentences": {
+    "total": 10,
+    "exact": 10
+  },
+  "results": [
+    {
+      "id": "e01",
+      "written": "Queria uma café, por favor.",
+      "heard": "Queria uma café, por favor.",
+      "errorType": "wrong gender article",
+      "outcome": "kept"
+    },
+    {
+      "id": "e02",
+      "written": "Eu quero um água, por favor.",
+      "heard": "Eu quero um água, por favor.",
+      "errorType": "wrong gender article",
+      "outcome": "kept"
+    },
+    {
+      "id": "e03",
+      "written": "O mesa está perto da janela.",
+      "heard": "O Lumeza está perto da janela.",
+      "errorType": "wrong gender article",
+      "outcome": "other"
+    },
+    {
+      "id": "e04",
+      "written": "Ela bebe uma leite com açúcar.",
+      "heard": "Ela bebe uma leite com açúcar.",
+      "errorType": "wrong gender article",
+      "outcome": "kept"
+    },
+    {
+      "id": "e05",
+      "written": "Uma pastel de nata, por favor.",
+      "heard": "Uma pastel de nata, por favor.",
+      "errorType": "wrong gender article",
+      "outcome": "kept"
+    },
+    {
+      "id": "e06",
+      "written": "A pão está quente.",
+      "heard": "A pão está quente.",
+      "errorType": "wrong gender article",
+      "outcome": "kept"
+    },
+    {
+      "id": "e07",
+      "written": "Eu queres um chá.",
+      "heard": "Eu quero um chá.",
+      "errorType": "wrong verb form",
+      "outcome": "silently-fixed"
+    },
+    {
+      "id": "e08",
+      "written": "Nós vai ao café todos os dias.",
+      "heard": "Nós vai ao café todos os dias.",
+      "errorType": "wrong verb form",
+      "outcome": "kept"
+    },
+    {
+      "id": "e09",
+      "written": "Eles é os meus amigos.",
+      "heard": "Eles é os meus amigos.",
+      "errorType": "wrong verb form",
+      "outcome": "kept"
+    },
+    {
+      "id": "e10",
+      "written": "Tu gosto muito de café.",
+      "heard": "o gosto muito de café.",
+      "errorType": "wrong verb form",
+      "outcome": "other"
+    },
+    {
+      "id": "e11",
+      "written": "Eu não sabes o preço.",
+      "heard": "Eu não sabes o preço.",
+      "errorType": "wrong verb form",
+      "outcome": "kept"
+    },
+    {
+      "id": "e12",
+      "written": "Onde está casa de banho?",
+      "heard": "Onde está a casa de banho?",
+      "errorType": "missing article",
+      "outcome": "silently-fixed"
+    },
+    {
+      "id": "e13",
+      "written": "Pode trazer conta, por favor?",
+      "heard": "Pode trazer conta, por favor?",
+      "errorType": "missing article",
+      "outcome": "kept"
+    },
+    {
+      "id": "e14",
+      "written": "Café está muito quente.",
+      "heard": "Café está muito quente.",
+      "errorType": "missing article",
+      "outcome": "kept"
+    },
+    {
+      "id": "e15",
+      "written": "Eu tenho irmã.",
+      "heard": "Eu tenho irmã.",
+      "errorType": "missing article",
+      "outcome": "kept"
+    },
+    {
+      "id": "e16",
+      "written": "Onde fica estação de comboio?",
+      "heard": "onde fica a estação de comboio.",
+      "errorType": "missing article",
+      "outcome": "silently-fixed"
+    },
+    {
+      "id": "e17",
+      "written": "Eu venho de o café.",
+      "heard": "Eu venho de um café.",
+      "errorType": "wrong preposition contraction",
+      "outcome": "other"
+    },
+    {
+      "id": "e18",
+      "written": "O livro está em o quarto.",
+      "heard": "O livro está em um quarto.",
+      "errorType": "wrong preposition contraction",
+      "outcome": "other"
+    },
+    {
+      "id": "e19",
+      "written": "Eu gosto de a sopa.",
+      "heard": "Eu gosto de assopa.",
+      "errorType": "wrong preposition contraction",
+      "outcome": "other"
+    },
+    {
+      "id": "e20",
+      "written": "Vamos a o cinema hoje.",
+      "heard": "Vamos a um cinema hoje.",
+      "errorType": "wrong preposition contraction",
+      "outcome": "other"
+    },
+    {
+      "id": "c01",
+      "written": "Bom dia, queria um café, por favor.",
+      "heard": "Bom dia, queria um café, por favor.",
+      "exact": true
+    },
+    {
+      "id": "c02",
+      "written": "A conta, por favor.",
+      "heard": "A conta, por favor.",
+      "exact": true
+    },
+    {
+      "id": "c03",
+      "written": "Sim, um pastel de nata. Quanto é?",
+      "heard": "Sim, um pastel de nata. Quanto é?",
+      "exact": true
+    },
+    {
+      "id": "c04",
+      "written": "Eu moro numa cidade pequena.",
+      "heard": "Eu moro numa cidade pequena.",
+      "exact": true
+    },
+    {
+      "id": "c05",
+      "written": "O café está muito quente.",
+      "heard": "O café está muito quente.",
+      "exact": true
+    },
+    {
+      "id": "c06",
+      "written": "Nós vamos ao cinema hoje.",
+      "heard": "Nós vamos ao cinema hoje.",
+      "exact": true
+    },
+    {
+      "id": "c07",
+      "written": "Ela bebe um copo de água.",
+      "heard": "Ela bebe um copo de água.",
+      "exact": true
+    },
+    {
+      "id": "c08",
+      "written": "Onde fica a casa de banho?",
+      "heard": "onde fica a casa de banho.",
+      "exact": true
+    },
+    {
+      "id": "c09",
+      "written": "Eu gosto muito da sopa.",
+      "heard": "Eu gosto muito da sopa.",
+      "exact": true
+    },
+    {
+      "id": "c10",
+      "written": "Obrigado, até amanhã.",
+      "heard": "Obrigado, até amanhã.",
+      "exact": true
+    }
+  ]
+}

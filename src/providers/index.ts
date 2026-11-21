@@ -5,6 +5,7 @@ import type { TtsProvider } from "./tts";
 import { createClaudeLlm } from "./adapters/llm-claude";
 import { createLocalLlm } from "./adapters/llm-local";
 import { createHostedStt } from "./adapters/stt-hosted";
+import { createLocalWhisperStt } from "./adapters/stt-whisper-local";
 import { createBrowserStt } from "./adapters/stt-browser";
 import { createHostedTts } from "./adapters/tts-hosted";
 import { createBrowserTts } from "./adapters/tts-browser";
@@ -23,7 +24,7 @@ export interface Providers {
 export function getProviders(config: ProviderConfig): Providers {
   const flag = () => config.paidProviders;
   return {
-    stt: [createBrowserStt(), createHostedStt()].map((p) => guardProvider(p, flag)),
+    stt: [createLocalWhisperStt(), createBrowserStt(), createHostedStt()].map((p) => guardProvider(p, flag)),
     llm: [createLocalLlm(), createClaudeLlm()].map((p) => guardProvider(p, flag)),
     tts: [createBrowserTts(), createHostedTts()].map((p) => guardProvider(p, flag)),
   };
