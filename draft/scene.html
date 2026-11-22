@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conversation - Language room draft</title>
+<link rel="stylesheet" href="styles.css">
+<script src="draft.js"></script>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+<symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></symbol>
+<symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3L2 21h20L12 3zM12 10v5M12 18h.01"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7h.01"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></symbol>
+<symbol id="i-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></symbol>
+<symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zM17 8a5 5 0 0 1 0 8"/></symbol>
+</svg>
+<header class="draft-bar">
+<div class="wrap">
+<nav aria-label="Draft navigation">
+<span>Draft navigation</span>
+<ul><li><a href="index.html">Library</a></li><li><a href="brief.html">Brief</a></li><li><a href="scene.html" aria-current="page">Scene</a></li><li><a href="recap.html">Recap</a></li><li><a href="states.html">States</a></li></ul>
+</nav>
+<p class="draft-note">This draft sends nothing. Controls that do not respond are coming soon.</p>
+</div>
+</header>
+<main id="main">
+<div class="scene-layout">
+<section class="scene" aria-label="Scene">
+<div class="scene-surface" id="scene-surface">
+<p class="overlay name-tag" lang="pt-PT">Dona Amélia</p>
+<p class="overlay">Scene placeholder. The generated cafe appears here.</p>
+<div class="scene-extras">
+<p class="overlay"><span lang="pt-PT">o pastel de nata</span>, custard tart</p>
+<p class="overlay" lang="pt-PT">Café 1,00 | Galão 1,60 | Pastel de nata 1,30</p>
+</div>
+</div>
+<button class="btn scene-toggle" type="button" aria-expanded="false" aria-controls="scene-surface" data-scene-toggle>Show scene</button>
+</section>
+<div class="panel conversation">
+<h1>Coffee at a Lisbon café</h1>
+<h2>Conversation</h2>
+<ol class="transcript" aria-label="Transcript">
+<li class="line line-char">
+<p class="who">Dona Amélia</p>
+<p class="say" lang="pt-PT">Bom dia. Diga, faz favor.</p>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
+</li>
+<li class="line line-learner">
+<p class="who">You</p>
+<p class="say" lang="pt-PT">Bom dia.</p>
+<div class="chip-row"></div>
+</li>
+<li class="line line-char">
+<p class="who">Dona Amélia</p>
+<p class="say" lang="pt-PT">Bom dia. O que vai ser?</p>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
+</li>
+<li class="line line-learner">
+<p class="who">You</p>
+<p class="say" lang="pt-PT">Queria uma café, por favor.</p>
+<div class="chip-row"><button data-chip class="chip" type="button" title="Café is masculine, so it takes um." aria-describedby="chip-note" aria-expanded="false"><strong lang="pt-PT">um café</strong><span>Article gender</span></button>
+<p class="chip-note" id="chip-note">Café is masculine, so it takes um.</p></div>
+</li>
+<li class="line line-char">
+<p class="who">Dona Amélia</p>
+<p class="say" lang="pt-PT">Já trago o café. Mais alguma coisa?</p>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
+</li>
+<li class="line line-learner">
+<p class="who">You</p>
+<p class="say" lang="pt-PT">Sim, um pastel de nata. Quanto é?</p>
+<div class="chip-row"></div>
+</li>
+<li class="line line-char">
+<p class="who">Dona Amélia</p>
+<p class="say" lang="pt-PT">São dois euros e trinta.</p>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
+</li>
+</ol>
+<div class="confirm" role="group" aria-labelledby="heard-label" data-confirm>
+<p class="label" id="heard-label">What I heard</p>
+<div class="heard-text" tabindex="0" lang="pt-PT" data-heard-text>A conta, por favor.</div>
+<textarea class="heard-edit" rows="2" lang="pt-PT" aria-labelledby="heard-label" data-heard-edit hidden></textarea>
+<div class="actions">
+<button class="btn" type="button" aria-pressed="false" data-edit>Edit</button>
+<button data-soon class="btn btn-primary" type="button">Send</button>
+</div>
+</div>
+<div class="mic-row">
+<button data-mic class="btn mic" type="button" aria-labelledby="mic-scene"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg></button>
+<p class="mic-label" id="mic-scene">Start speaking</p>
+</div>
+<h2>Goal</h2>
+<ol class="steps">
+<li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="sr-only">Done: </span><span>Say good morning.</span></li>
+<li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="sr-only">Done: </span><span>Ask for a coffee and a <span lang="pt-PT">pastel de nata</span>.</span></li>
+<li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-circle"/></svg><span class="sr-only">Not done: </span><span>Ask for the bill and say thank you.</span></li>
+</ol>
+<div class="notice"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><p>Text on signs inside the generated scene may be wrong. Use the labels shown by the app.</p></div>
+<div class="actions"><a class="btn" href="recap.html">End conversation</a></div>
+</div>
+</div>
+</main>
+</body>
+</html>

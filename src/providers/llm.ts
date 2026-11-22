@@ -1,0 +1,24 @@
+export interface LlmMessage {
+  role: "system" | "user" | "assistant";
+  content: string;
+}
+
+export interface LlmRequest {
+  messages: LlmMessage[];
+  temperature?: number;
+  maxTokens?: number;
+  json?: boolean;
+  /** Hidden reasoning. The local proxy switches it off unless this is true. */
+  thinking?: boolean;
+  signal?: AbortSignal;
+}
+
+export interface LlmProvider {
+  kind: "llm";
+  id: string;
+  label: string;
+  paid: boolean;
+  complete(req: LlmRequest): Promise<{ text: string }>;
+  /** Optional. Calls onDelta with each piece of text as it arrives. */
+  completeStream?(req: LlmRequest, onDelta: (text: string) => void): Promise<{ text: string }>;
+}

@@ -1,0 +1,367 @@
+{
+  "language": "pt-PT",
+  "status": "drafted by a model, not yet reviewed by a fluent speaker",
+  "reviewed": null,
+  "items": [
+    {
+      "id": "e01",
+      "level": "A1",
+      "text": "Eu sou cansado hoje.",
+      "hasError": true,
+      "errorSpan": "sou cansado",
+      "corrected": "Eu estou cansado hoje.",
+      "rule": "ser/estar for a temporary state"
+    },
+    {
+      "id": "e02",
+      "level": "A1",
+      "text": "Queria um água, por favor.",
+      "hasError": true,
+      "errorSpan": "um água",
+      "corrected": "Queria uma água, por favor.",
+      "rule": "article gender: água is feminine"
+    },
+    {
+      "id": "e03",
+      "level": "A1",
+      "text": "O casa é muito bonita.",
+      "hasError": true,
+      "errorSpan": "O casa",
+      "corrected": "A casa é muito bonita.",
+      "rule": "article gender: casa is feminine"
+    },
+    {
+      "id": "e04",
+      "level": "A1",
+      "text": "Eu gosto de o café.",
+      "hasError": true,
+      "errorSpan": "de o",
+      "corrected": "Eu gosto do café.",
+      "rule": "contraction de + o = do"
+    },
+    {
+      "id": "e05",
+      "level": "A2",
+      "text": "Ontem eu vou à escola.",
+      "hasError": true,
+      "errorSpan": "vou",
+      "corrected": "Ontem eu fui à escola.",
+      "rule": "past tense after ontem"
+    },
+    {
+      "id": "e06",
+      "level": "A1",
+      "text": "Eu tenho fome muito.",
+      "hasError": true,
+      "errorSpan": "fome muito",
+      "corrected": "Eu tenho muita fome.",
+      "rule": "word order: muita before the noun"
+    },
+    {
+      "id": "e07",
+      "level": "A1",
+      "text": "Os meninos é felizes.",
+      "hasError": true,
+      "errorSpan": "é",
+      "corrected": "Os meninos são felizes.",
+      "rule": "verb agreement: plural subject"
+    },
+    {
+      "id": "e08",
+      "level": "A1",
+      "text": "Ela tem trinta ano.",
+      "hasError": true,
+      "errorSpan": "ano",
+      "corrected": "Ela tem trinta anos.",
+      "rule": "plural noun after a number"
+    },
+    {
+      "id": "e09",
+      "level": "A2",
+      "text": "Eu vou em Lisboa amanhã.",
+      "hasError": true,
+      "errorSpan": "em Lisboa",
+      "corrected": "Eu vou a Lisboa amanhã.",
+      "rule": "preposition a with ir and a destination"
+    },
+    {
+      "id": "e10",
+      "level": "A1",
+      "text": "Eu gostar de música.",
+      "hasError": true,
+      "errorSpan": "gostar",
+      "corrected": "Eu gosto de música.",
+      "rule": "verb conjugation: first person"
+    },
+    {
+      "id": "e11",
+      "level": "A2",
+      "text": "Nós vai ao mercado.",
+      "hasError": true,
+      "errorSpan": "vai",
+      "corrected": "Nós vamos ao mercado.",
+      "rule": "verb agreement: nós"
+    },
+    {
+      "id": "e12",
+      "level": "A1",
+      "text": "Eu tem um irmão.",
+      "hasError": true,
+      "errorSpan": "tem",
+      "corrected": "Eu tenho um irmão.",
+      "rule": "verb conjugation: first person of ter"
+    },
+    {
+      "id": "e13",
+      "level": "A1",
+      "text": "Ela é professor.",
+      "hasError": true,
+      "errorSpan": "professor",
+      "corrected": "Ela é professora.",
+      "rule": "noun gender for a woman"
+    },
+    {
+      "id": "e14",
+      "level": "A1",
+      "text": "Eu tenho dois gato.",
+      "hasError": true,
+      "errorSpan": "gato",
+      "corrected": "Eu tenho dois gatos.",
+      "rule": "plural noun after a number"
+    },
+    {
+      "id": "e15",
+      "level": "A2",
+      "text": "As chaves está na mesa.",
+      "hasError": true,
+      "errorSpan": "está",
+      "corrected": "As chaves estão na mesa.",
+      "rule": "verb agreement: plural subject"
+    },
+    {
+      "id": "e16",
+      "level": "A2",
+      "text": "Ele quer comer uma maçã vermelho.",
+      "hasError": true,
+      "errorSpan": "vermelho",
+      "corrected": "Ele quer comer uma maçã vermelha.",
+      "rule": "adjective gender agreement"
+    },
+    {
+      "id": "e17",
+      "level": "B1",
+      "text": "Se eu teria tempo, iria ao cinema.",
+      "hasError": true,
+      "errorSpan": "teria",
+      "corrected": "Se eu tivesse tempo, iria ao cinema.",
+      "rule": "imperfect subjunctive after se"
+    },
+    {
+      "id": "e18",
+      "level": "B1",
+      "text": "Espero que ele vem amanhã.",
+      "hasError": true,
+      "errorSpan": "vem",
+      "corrected": "Espero que ele venha amanhã.",
+      "rule": "present subjunctive after esperar que"
+    },
+    {
+      "id": "e19",
+      "level": "B1",
+      "text": "Eu conheço-lhe há muito tempo.",
+      "hasError": true,
+      "errorSpan": "lhe",
+      "corrected": "Eu conheço-o há muito tempo.",
+      "rule": "direct object pronoun o, not lhe"
+    },
+    {
+      "id": "e20",
+      "level": "B1",
+      "text": "Isto é um segredo entre eu e ti.",
+      "hasError": true,
+      "errorSpan": "eu",
+      "corrected": "Isto é um segredo entre mim e ti.",
+      "rule": "pronoun after entre: mim"
+    },
+    {
+      "id": "c01",
+      "level": "A1",
+      "text": "Estou a trabalhar em casa.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Estou a trabalhar em casa.",
+      "rule": "estar a + infinitive is standard in Portugal"
+    },
+    {
+      "id": "c02",
+      "level": "A1",
+      "text": "Queria um café, por favor.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Queria um café, por favor.",
+      "rule": "correct"
+    },
+    {
+      "id": "c03",
+      "level": "A1",
+      "text": "Chamo-me Ana e sou de Lisboa.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Chamo-me Ana e sou de Lisboa.",
+      "rule": "enclitic pronoun after the verb"
+    },
+    {
+      "id": "c04",
+      "level": "A1",
+      "text": "Onde fica a casa de banho?",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Onde fica a casa de banho?",
+      "rule": "casa de banho is the Portugal word"
+    },
+    {
+      "id": "c05",
+      "level": "A1",
+      "text": "O meu telemóvel está na mesa.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "O meu telemóvel está na mesa.",
+      "rule": "telemóvel is the Portugal word"
+    },
+    {
+      "id": "c06",
+      "level": "A1",
+      "text": "De manhã tomo o pequeno-almoço.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "De manhã tomo o pequeno-almoço.",
+      "rule": "pequeno-almoço is the Portugal word"
+    },
+    {
+      "id": "c07",
+      "level": "A2",
+      "text": "Quero um bilhete de comboio para o Porto.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Quero um bilhete de comboio para o Porto.",
+      "rule": "correct"
+    },
+    {
+      "id": "c08",
+      "level": "A2",
+      "text": "Vou de autocarro para o trabalho.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Vou de autocarro para o trabalho.",
+      "rule": "autocarro is the Portugal word"
+    },
+    {
+      "id": "c09",
+      "level": "A2",
+      "text": "Ontem comi peixe com batatas.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Ontem comi peixe com batatas.",
+      "rule": "correct"
+    },
+    {
+      "id": "c10",
+      "level": "A2",
+      "text": "Ela está a ler um livro no sofá.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Ela está a ler um livro no sofá.",
+      "rule": "estar a + infinitive"
+    },
+    {
+      "id": "c11",
+      "level": "A1",
+      "text": "Posso pagar com cartão?",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Posso pagar com cartão?",
+      "rule": "correct"
+    },
+    {
+      "id": "c12",
+      "level": "A2",
+      "text": "Dá-me um copo de água, por favor.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Dá-me um copo de água, por favor.",
+      "rule": "enclitic pronoun after the verb"
+    },
+    {
+      "id": "c13",
+      "level": "A1",
+      "text": "Eu tenho um irmão e duas irmãs.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Eu tenho um irmão e duas irmãs.",
+      "rule": "correct"
+    },
+    {
+      "id": "c14",
+      "level": "A2",
+      "text": "Gostava de reservar uma mesa para duas pessoas.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Gostava de reservar uma mesa para duas pessoas.",
+      "rule": "correct"
+    },
+    {
+      "id": "c15",
+      "level": "A2",
+      "text": "Não percebo, pode repetir mais devagar?",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Não percebo, pode repetir mais devagar?",
+      "rule": "correct"
+    },
+    {
+      "id": "c16",
+      "level": "B1",
+      "text": "Se eu tivesse tempo, iria ao cinema.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Se eu tivesse tempo, iria ao cinema.",
+      "rule": "imperfect subjunctive with conditional"
+    },
+    {
+      "id": "c17",
+      "level": "B1",
+      "text": "Espero que ele venha amanhã.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Espero que ele venha amanhã.",
+      "rule": "present subjunctive"
+    },
+    {
+      "id": "c18",
+      "level": "B1",
+      "text": "Disse-me que já tinha jantado.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Disse-me que já tinha jantado.",
+      "rule": "enclitic pronoun and pluperfect"
+    },
+    {
+      "id": "c19",
+      "level": "B1",
+      "text": "Há muito tempo que não o vejo.",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Há muito tempo que não o vejo.",
+      "rule": "proclitic pronoun after negation"
+    },
+    {
+      "id": "c20",
+      "level": "A2",
+      "text": "Tu queres um sumo ou uma cerveja?",
+      "hasError": false,
+      "errorSpan": null,
+      "corrected": "Tu queres um sumo ou uma cerveja?",
+      "rule": "correct"
+    }
+  ]
+}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>States - Language room draft</title>
+<link rel="stylesheet" href="styles.css">
+<script src="draft.js"></script>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+<symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></symbol>
+<symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3L2 21h20L12 3zM12 10v5M12 18h.01"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7h.01"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></symbol>
+<symbol id="i-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></symbol>
+<symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zM17 8a5 5 0 0 1 0 8"/></symbol>
+</svg>
+<header class="draft-bar">
+<div class="wrap">
+<nav aria-label="Draft navigation">
+<span>Draft navigation</span>
+<ul><li><a href="index.html">Library</a></li><li><a href="brief.html">Brief</a></li><li><a href="scene.html">Scene</a></li><li><a href="recap.html">Recap</a></li><li><a href="states.html" aria-current="page">States</a></li></ul>
+</nav>
+<p class="draft-note">This draft sends nothing. Controls that do not respond are coming soon.</p>
+</div>
+</header>
+<main class="wrap page" id="main">
+<div class="text-col">
+<h1>States</h1>
+<h2>Library</h2>
+<section class="state" aria-labelledby="lib-loading">
+<h3 id="lib-loading">Library, loading</h3>
+<p class="status" role="status">Loading scenarios.</p>
+</section>
+<section class="state" aria-labelledby="lib-empty">
+<h3 id="lib-empty">Library, empty</h3>
+<p>No scenarios are available yet. Add a reviewed scenario file to the scenarios folder.</p>
+</section>
+<section class="state" aria-labelledby="lib-error">
+<h3 id="lib-error">Library, error</h3>
+<div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>The scenario list could not be loaded. Check that the app is running, then press Try again.</p>
+<button data-soon class="btn" type="button">Try again</button></div></div>
+</section>
+<section class="state" aria-labelledby="lib-long">
+<h3 id="lib-long">Library, long title</h3>
+<article class="card" aria-labelledby="lib-long-title">
+<p class="card-title" id="lib-long-title">Coffee and a pastry at a small, family run Lisbon café in the old town</p>
+<dl class="facts">
+<div><dt>Language</dt><dd>European Portuguese</dd></div>
+<div><dt>Level</dt><dd>A2</dd></div>
+<div><dt>Place</dt><dd>Pastelaria in Alfama</dd></div>
+<div><dt>Goal</dt><dd>Order a coffee and a pastry, then ask for the bill.</dd></div>
+</dl>
+<a class="btn" href="brief.html">Open scenario</a>
+</article>
+</section>
+<h2>Brief</h2>
+<section class="state" aria-labelledby="br-empty">
+<h3 id="br-empty">Brief, check not run yet</h3>
+<p>Press the microphone button and say "<span lang="pt-PT">Bom dia</span>". Your words appear below the button. Check that they match what you said.</p>
+<div class="mic-row"><button data-soon class="btn" type="button" aria-labelledby="t-empty"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg><span id="t-empty">Test microphone</span></button></div>
+<p class="status" role="status"></p>
+<p><a class="btn btn-primary" href="scene.html">Start conversation</a></p>
+</section>
+<section class="state" aria-labelledby="br-loading">
+<h3 id="br-loading">Brief, checking</h3>
+<p class="status" role="status">Checking your microphone.</p>
+</section>
+<section class="state" aria-labelledby="br-passed">
+<h3 id="br-passed">Brief, check passed</h3>
+<p class="status" role="status">Microphone works. We heard: <span lang="pt-PT">Bom dia</span>.</p>
+</section>
+<section class="state" aria-labelledby="br-denied">
+<h3 id="br-denied">Brief, microphone denied</h3>
+<div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>Microphone access is blocked. Allow the microphone for this site in your browser settings, then press Try again. The conversation needs the microphone.</p>
+<button data-soon class="btn" type="button">Try again</button></div></div>
+</section>
+<section class="state" aria-labelledby="br-none">
+<h3 id="br-none">Brief, no microphone found</h3>
+<div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>No microphone found. Connect a microphone or headset, then press Check again.</p>
+<button data-soon class="btn" type="button">Check again</button></div></div>
+</section>
+<section class="state" aria-labelledby="br-stt">
+<h3 id="br-stt">Brief, speech service unreachable</h3>
+<div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>The speech service did not respond. Check your connection, then press Try again.</p>
+<button data-soon class="btn" type="button">Try again</button></div></div>
+</section>
+<section class="state" aria-labelledby="br-long">
+<h3 id="br-long">Brief, long persona</h3>
+<div class="text-col"><dl class="facts"><div><dt>Character</dt><dd>Dona Amélia, café owner behind the counter. She is friendly, a little hurried and speaks clearly. She has run the pastelaria for many long years and knows most of the regulars by name. In the morning she serves coffee and pastries quickly, so she asks short questions. She repeats once when you ask, and she waits patiently while you think.</dd></div></dl></div>
+</section>
+<h2>Scene</h2>
+<section class="state" aria-labelledby="sc-loading">
+<h3 id="sc-loading">Scene, loading</h3>
+<div class="progress" role="progressbar" aria-label="Loading the scene" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60"><span style="width: 60%"></span></div>
+<p class="status" role="status">Loading the scene, 60 percent</p>
+</section>
+<section class="state" aria-labelledby="sc-failed">
+<h3 id="sc-failed">Scene, failed</h3>
+<div class="notice"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><p>Scene unavailable, continuing without it</p></div>
+</section>
+<section class="state" aria-labelledby="sc-empty">
+<h3 id="sc-empty">Scene, empty transcript</h3>
+<div class="panel demo-panel">
+<p class="sr-only">Conversation</p><p class="empty-line">Dona Amélia is about to speak.</p>
+</div>
+</section>
+<section class="state" aria-labelledby="sc-speaking">
+<h3 id="sc-speaking">Scene, character speaking</h3>
+<div class="panel demo-panel">
+<ol class="transcript" aria-label="Transcript">
+<li class="line line-char">
+<p class="who">Dona Amélia</p>
+<p class="say" lang="pt-PT">Bom dia. Diga, faz favor.</p>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
+</li>
+</ol>
+<p class="speaking"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-speaker"/></svg>Speaking</p>
+</div>
+</section>
+<section class="state" aria-labelledby="sc-mic">
+<h3 id="sc-mic">Scene, microphone toggle</h3>
+<div class="panel demo-panel">
+<div class="mic-row">
+<button data-soon class="btn mic btn-primary" type="button" aria-labelledby="mic-a"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg></button>
+<p class="mic-label" id="mic-a">Start speaking</p>
+</div>
+<div class="mic-row">
+<button data-soon class="btn mic btn-primary" type="button" aria-labelledby="mic-b"><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-stop"/></svg></button>
+<p class="mic-label" id="mic-b">Stop speaking</p>
+</div>
+</div>
+</section>
+<section class="state" aria-labelledby="sc-nothing">
+<h3 id="sc-nothing">Scene, speech returned nothing</h3>
+<div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>We did not hear anything. Press the microphone and speak again.</p></div></div>
+</section>
+<section class="state" aria-labelledby="sc-llm">
+<h3 id="sc-llm">Scene, LLM timeout</h3>
+<div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>Dona Amélia did not answer in time. Your line is kept.</p>
+<button data-soon class="btn" type="button">Retry</button></div></div>
+</section>
+<section class="state" aria-labelledby="sc-tts">
+<h3 id="sc-tts">Scene, audio failed</h3>
+<div class="panel demo-panel">
+<ol class="transcript" aria-label="Transcript">
+<li class="line line-char">
+<p class="who">Dona Amélia</p>
+<p class="say" lang="pt-PT">Já trago o café. Mais alguma coisa?</p>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
+</li>
+</ol>
+<div class="notice"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><p>Audio is unavailable for this line. Showing text only.</p></div>
+</div>
+</section>
+<section class="state" aria-labelledby="sc-silent">
+<h3 id="sc-silent">Scene, learner silent for 20 seconds</h3>
+<div class="panel demo-panel">
+<ol class="transcript" aria-label="Transcript">
+<li class="line line-char">
+<p class="who">Dona Amélia</p>
+<p class="say" lang="pt-PT">Precisa de ajuda? Diga, faz favor.</p>
+<button data-soon class="btn btn-plain btn-small" type="button">Report a mistake</button>
+</li>
+</ol>
+<p class="hint">Hint: Ask for a coffee and a <span lang="pt-PT">pastel de nata</span>.</p>
+</div>
+</section>
+<section class="state" aria-labelledby="sc-long">
+<h3 id="sc-long">Scene, very long learner line</h3>
+<div class="panel demo-panel">
+<div class="confirm" role="group" aria-labelledby="heard-long-label" data-confirm>
+<p class="label" id="heard-long-label">What I heard</p>
+<div class="heard-text" tabindex="0" lang="pt-PT" data-heard-text>Bom dia, queria uma café com leite e um pastel de nata, por favor, e também queria saber quanto é tudo e se posso pagar com cartão, porque hoje tenho pouco tempo e preciso de ir trabalhar depois do pequeno-almoço. Obrigado, e desculpe, não falo muito bem português, mas estou a aprender todos os dias aqui em Lisboa. Hoje quero praticar com calma e falar devagar.</div>
+<textarea class="heard-edit" rows="2" lang="pt-PT" aria-labelledby="heard-long-label" data-heard-edit hidden></textarea>
+<div class="actions">
+<button class="btn" type="button" aria-pressed="false" data-edit>Edit</button>
+<button data-soon class="btn btn-primary" type="button">Send</button>
+</div>
+</div>
+</div>
+</section>
+<section class="state" aria-labelledby="sc-phone">
+<h3 id="sc-phone">Scene, small screen</h3>
+<p>At 375 px the scene collapses to a 160 px header with a "Show scene" button, then "Hide scene" when open. Without script the header stays open and nothing is hidden. Every other screen is built at 375 px first and has no horizontal scroll.</p>
+<p><a class="btn" href="scene.html">Open the scene screen</a></p>
+</section>
+<h2>Recap</h2>
+<section class="state" aria-labelledby="rc-none">
+<h3 id="rc-none">Recap, no mistakes</h3>
+<p class="label">Mistakes</p>
+<p>No mistakes found in this session. The checker shows only corrections it is sure about, so a quiet recap does not prove every line was perfect.</p>
+</section>
+<section class="state" aria-labelledby="rc-one">
+<h3 id="rc-one">Recap, ended after one turn</h3>
+<p>You ended after 1 turn, so there is little to review. Phrases used are listed below. Try the full conversation to practise the order and the bill.</p>
+<p class="label">Phrases used</p>
+<ul><li lang="pt-PT">Bom dia</li></ul>
+<p class="label">Mistakes</p>
+<p>No mistakes found in this turn.</p>
+<p class="label">Phrases to practise</p>
+<ol class="practise">
+<li><p class="say" lang="pt-PT"><strong>A conta, por favor.</strong></p>
+<p>Why: You did not reach this step, and it ends every visit.</p>
+<p>Example: "<span lang="pt-PT">Boa tarde. A conta, por favor.</span>"</p></li>
+<li><p class="say" lang="pt-PT"><strong>Queria um café, por favor.</strong></p>
+<p>Why: Practise um with a masculine word, the one slip in this session.</p>
+<p>Example: "<span lang="pt-PT">Queria um pastel de nata, por favor.</span>"</p></li>
+<li><p class="say" lang="pt-PT"><strong>Quanto é?</strong></p>
+<p>Why: Short and useful after any order.</p>
+<p>Example: "<span lang="pt-PT">Quanto é um galão?</span>"</p></li>
+</ol>
+</section>
+<section class="state" aria-labelledby="rc-many">
+<h3 id="rc-many">Recap, many mistakes</h3>
+<p>Showing the first 5 of 8 mistakes. Scroll for the rest.</p>
+<ol class="scroll-box" tabindex="0" aria-label="Mistakes, scrolling list">
+<li><dl class="facts mistake"><div><dt>You said</dt><dd lang="pt-PT">Queria uma café, por favor.</dd></div><div><dt>Corrected form</dt><dd lang="pt-PT">Queria um café, por favor.</dd></div><div><dt>Reason</dt><dd>Café is masculine, so it takes um.</dd></div></dl></li>
+<li><dl class="facts mistake"><div><dt>You said</dt><dd lang="pt-PT">Obrigado, dona Amélia.</dd></div><div><dt>Corrected form</dt><dd lang="pt-PT">Obrigada, dona Amélia.</dd></div><div><dt>Reason</dt><dd>A woman says obrigada.</dd></div></dl></li>
+<li><dl class="facts mistake"><div><dt>You said</dt><dd lang="pt-PT">Quanto custa os pastéis?</dd></div><div><dt>Corrected form</dt><dd lang="pt-PT">Quanto custam os pastéis?</dd></div><div><dt>Reason</dt><dd>The subject is plural, so the verb is custam.</dd></div></dl></li>
+<li><dl class="facts mistake"><div><dt>You said</dt><dd lang="pt-PT">Quero um água, por favor.</dd></div><div><dt>Corrected form</dt><dd lang="pt-PT">Quero uma água, por favor.</dd></div><div><dt>Reason</dt><dd>Água is feminine, so it takes uma.</dd></div></dl></li>
+<li><dl class="facts mistake"><div><dt>You said</dt><dd lang="pt-PT">Eu gosto o café.</dd></div><div><dt>Corrected form</dt><dd lang="pt-PT">Eu gosto do café.</dd></div><div><dt>Reason</dt><dd>Gostar takes de.</dd></div></dl></li>
+<li><dl class="facts mistake"><div><dt>You said</dt><dd lang="pt-PT">Tem um mesa livre?</dd></div><div><dt>Corrected form</dt><dd lang="pt-PT">Tem uma mesa livre?</dd></div><div><dt>Reason</dt><dd>Mesa is feminine, so it takes uma.</dd></div></dl></li>
+<li><dl class="facts mistake"><div><dt>You said</dt><dd lang="pt-PT">Dois café, por favor.</dd></div><div><dt>Corrected form</dt><dd lang="pt-PT">Dois cafés, por favor.</dd></div><div><dt>Reason</dt><dd>A plural noun takes an s.</dd></div></dl></li>
+<li><dl class="facts mistake"><div><dt>You said</dt><dd lang="pt-PT">Eu sou com fome.</dd></div><div><dt>Corrected form</dt><dd lang="pt-PT">Tenho fome.</dd></div><div><dt>Reason</dt><dd>Portuguese says tenho fome.</dd></div></dl></li>
+</ol>
+</section>
+<section class="state" aria-labelledby="rc-loading">
+<h3 id="rc-loading">Recap, loading</h3>
+<p class="status" role="status">Preparing your recap.</p>
+</section>
+<section class="state" aria-labelledby="rc-error">
+<h3 id="rc-error">Recap, error</h3>
+<div class="notice notice-error"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div><p>The recap could not be built. Your transcript is saved. Press Try again.</p>
+<button data-soon class="btn" type="button">Try again</button></div></div>
+</section>
+<section class="state" aria-labelledby="rc-long">
+<h3 id="rc-long">Recap, long learner line</h3>
+<dl class="facts mistake">
+<div><dt>You said</dt><dd lang="pt-PT">Bom dia, queria uma café com leite e um pastel de nata, por favor, e também queria saber quanto é tudo e se posso pagar com cartão, porque hoje tenho pouco tempo e preciso de ir trabalhar depois do pequeno-almoço.</dd></div>
+<div><dt>Corrected form</dt><dd lang="pt-PT">Bom dia, queria um café com leite e um pastel de nata, por favor, e também queria saber quanto é tudo e se posso pagar com cartão, porque hoje tenho pouco tempo e preciso de ir trabalhar depois do pequeno-almoço.</dd></div>
+<div><dt>Reason</dt><dd>Café is masculine, so it takes um.</dd></div>
+</dl>
+</section>
+<h2>All screens</h2>
+<section class="state" aria-labelledby="all-hover">
+<h3 id="all-hover">Hover and focus</h3>
+<p>Hover tints a control. Focus draws a 2 px outline. Neither changes the size of anything. Press Tab on any screen to see the focus outline.</p>
+<p><a class="btn" href="brief.html">Open the brief</a></p>
+</section>
+<section class="state" aria-labelledby="all-dark">
+<h3 id="all-dark">Dark mode</h3>
+<p>Every screen follows the system setting. These links force it on one screen.</p>
+<ul>
+<li><a class="tap" href="index.html?theme=dark">Library in dark mode</a></li>
+<li><a class="tap" href="brief.html?theme=dark">Brief in dark mode</a></li>
+<li><a class="tap" href="scene.html?theme=dark">Scene in dark mode</a></li>
+<li><a class="tap" href="recap.html?theme=dark">Recap in dark mode</a></li>
+</ul>
+</section>
+</div>
+</main>
+</body>
+</html>
