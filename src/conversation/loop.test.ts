@@ -27,6 +27,11 @@ const scenario = {
 
 const providerIds = { stt: "stt", llm: "llm", analyzer: "an", reviewer: "rev", tts: "tts" };
 
+// A steps-judge reply that marks each step as covered by the given quote.
+function stepsReply(ids: string[], quote: string): string {
+  return JSON.stringify({ parts: ids.map((step) => ({ step, part: step, quote, covers: true })) });
+}
+
 type ReplyScript = (req: LlmRequest, onDelta: (t: string) => void) => Promise<string>;
 
 function turnOf(text: string, low: string[] = []) {
@@ -63,7 +68,7 @@ function setup(
     paid: false,
     async complete(req) {
       requests.push(req);
-      return { text: (opts.steps ?? (() => '{"done":[]}'))() };
+      return { text: (opts.steps ?? (() => '{"parts":[]}'))() };
     },
     async completeStream(req, onDelta) {
       requests.push(req);
@@ -266,7 +271,7 @@ describe("conversation loop", () => {
   });
 
   it("ends with reason goal when every step is done, after the reply finished", async () => {
-    const { conv, events } = setup({ steps: () => '{"done":["greet","order","pay"]}' });
+    const { conv, events } = setup({ steps: () => stepsReply(["greet", "order", "pay"], "A conta, por favor.") });
     await conv.send(turnOf("A conta, por favor."));
     expect(conv.session.turns).toHaveLength(2);
     expect(conv.session.stepsDone).toEqual(["greet", "order", "pay"]);
@@ -282,7 +287,7 @@ describe("conversation loop", () => {
   });
 
   it("does not end when only some steps are done", async () => {
-    const { conv } = setup({ steps: () => '{"done":["greet"]}' });
+    const { conv } = setup({ steps: () => stepsReply(["greet"], "Bom dia.") });
     await conv.send(turnOf("Bom dia."));
     expect(conv.session.stepsDone).toEqual(["greet"]);
     expect(conv.session.endReason).toBeUndefined();
@@ -342,7 +347,7 @@ describe("conversation loop", () => {
       get: async () => undefined,
       list: async () => [],
     };
-    const { conv } = setup({ store, steps: () => '{"done":["greet","order","pay"]}' });
+    const { conv } = setup({ store, steps: () => stepsReply(["greet", "order", "pay"], "A conta, por favor.") });
     await conv.send(turnOf("A conta, por favor."));
     const last = saved.at(-1);
     expect(last?.endReason).toBe("goal");

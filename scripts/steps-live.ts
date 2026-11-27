@@ -18,8 +18,24 @@ type Line = { role: "learner" | "character"; text: string };
 const L = (text: string): Line => ({ role: "learner", text });
 const C = (text: string): Line => ({ role: "character", text });
 
+function syntheticLines(): Line[] {
+  return [
+    C("Bom dia! O que gostaria de tomar hoje?"),
+    L("Bom dia."),
+    C("Um café e um pastel de nata, por favor."),
+    L("Queria uma café e um pastel de nata, por favor."),
+    C("Aqui está o seu café e o seu pastel. Mais alguma coisa?"),
+    L("Sim, é tudo. Quanto é?"),
+    C("Quer a conta, por favor?"),
+    L("Eu não sabe quanto custa o galão."),
+    C("O galão custa um euro e sessenta."),
+    L("Gosto muito de um café daqui."),
+    C("Fico feliz que goste. Quer pagar agora?"),
+  ];
+}
+
 // knownMiss marks a case the local model still gets wrong. It is printed and counted, but does not set the exit code.
-const cases: { name: string; history: Line[]; expected: string[]; knownMiss?: boolean }[] = [
+const cases: { name: string; history: Line[]; stepsDone?: string[]; expected: string[]; knownMiss?: boolean }[] = [
   { name: "greet only", history: [C("Bom dia. Diga, faz favor."), L("Bom dia.")], expected: ["greet"] },
   {
     name: "greet and order",
@@ -74,6 +90,38 @@ const cases: { name: string; history: Line[]; expected: string[]; knownMiss?: bo
     expected: ["greet", "order", "pay"],
   },
   { name: "empty transcript", history: [], expected: [] },
+  // The learner lines of the synthetic session (eval/transcripts/phase-2-synthetic-2026-11-21.json), as heard by
+  // Whisper, with greet and order already marked. Before the evidence prompt the judge left pay open on the last line.
+  {
+    name: "synthetic session, asks for the bill and thanks after a price question",
+    history: [...syntheticLines(), L("A conta? Por favor. Obrigado.")],
+    stepsDone: ["greet", "order"],
+    expected: ["greet", "order", "pay"],
+  },
+  {
+    name: "synthetic session, asks for the bill without thanks",
+    history: [...syntheticLines(), L("A conta, por favor.")],
+    stepsDone: ["greet", "order"],
+    expected: ["greet", "order"],
+  },
+  {
+    name: "synthetic session, thanks without the bill",
+    history: [...syntheticLines(), L("Obrigado.")],
+    stepsDone: ["greet", "order"],
+    expected: ["greet", "order"],
+  },
+  {
+    name: "asks for the bill without thanks",
+    history: [
+      C("Bom dia. Diga, faz favor."),
+      L("Bom dia."),
+      C("O que vai ser?"),
+      L("Queria um café e um pastel de nata, por favor."),
+      C("Mais alguma coisa?"),
+      L("A conta, por favor."),
+    ],
+    expected: ["greet", "order"],
+  },
 ];
 
 let failures = 0;
@@ -82,7 +130,7 @@ for (const c of cases) {
   const actual = await judgeSteps(llm, {
     scenario,
     history: c.history,
-    stepsDone: [],
+    stepsDone: c.stepsDone ?? [],
     onError: (m) => console.log(`  judge error: ${m}`),
   });
   const ok = JSON.stringify(actual) === JSON.stringify(c.expected);
